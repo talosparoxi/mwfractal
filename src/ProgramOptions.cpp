@@ -44,7 +44,8 @@ ProgramOptions::ProgramOptions( int argc, char **argv ) {
         ( "max_imag", bpo::value<float>(&this->max_im)->default_value(1.125), "" )
         ( "z_cutoff", bpo::value<float>(&this->cutoff)->default_value(4096), "" )
         ( "show_uniques", bpo::value<bool>(&this->showuniques)->zero_tokens() )
-        ( "show_orbits", bpo::value<bool>(&this->showorbits)->zero_tokens() );
+        ( "show_orbits", bpo::value<bool>(&this->showorbits)->zero_tokens() )
+        ( "skip_orbits", bpo::value<bool>(&this->skiporbits)->zero_tokens() );
 
     bpo::options_description graphics( "Graphical Options" );
     graphics.add_options()

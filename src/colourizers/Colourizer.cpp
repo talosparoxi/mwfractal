@@ -27,7 +27,7 @@ Colourizer::Colourizer( boost::shared_ptr<ProgramOptions> opts ) {
     this->_lightness_diff = opts->lightness_max - opts->lightness_min;
     this->_arctan_horiz_scaler = opts->colour_weighting / opts->number_hue;
     this->_arctan_vert_scaler = atan( opts->colour_weighting );
-    this->_palette[0] = ColorRGB( 0, 0, 0 );
+    this->_palette[-1] = ColorRGB( 0, 0, 0 );
 
     float dp_re = 1 / pow( 2, opts->dprx );
     float dp_im = 1 / pow( 2, opts->dpix );
@@ -77,7 +77,7 @@ bool Colourizer::run() {
 
     for( this->_idy = 0; this->_idy < this->_py; this->_idy++ ) {
         for( this->_idx = 0; this->_idx < this->_px; this->_idx++ ) {
-            if( (*this->results)[this->_idy][this->_idx] != 0 ) {
+            if( (*this->results)[this->_idy][this->_idx] != -1 ) {
                 if( this->_opts->colourizer == 2 ) {
                     this->_frac_part = modf( (*this->results)[this->_idy][this->_idx], &this->_ones_digit );
                     *next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];

@@ -30,7 +30,7 @@ NEM_White_to_Black::~NEM_White_to_Black() {
 }
 
 bool NEM_White_to_Black::generatePalette() {
-    for( this->_idx = 1; this->_idx <= this->_opts->number_hue; this->_idx++ ) {
+    for( this->_idx = 0; this->_idx < this->_opts->number_hue; this->_idx++ ) {
         if( this->_opts->colour_weighting == 0.0 ) {
             this->_l = ( double ) this->_idx / this->_opts->number_hue;
         } else if( this->_opts->colour_weighting > 0.0 ) {

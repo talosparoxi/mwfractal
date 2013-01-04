@@ -41,12 +41,14 @@ Generator::Generator( boost::shared_ptr<ProgramOptions> opts ) {
             this->results[idy].reserve( this->_px );
     }
     int idx;
-    this->orbits.resize( this->_py );
-    for( idy = 0; idy < this->_py; idy++ ) {
+    if( !this->_opts->skiporbits ) {
+        this->orbits.resize( this->_py );
+        for( idy = 0; idy < this->_py; idy++ ) {
             this->orbits[idy].resize( this->_px );
             for( idx = 0; idx < this->_px; idx++ ) {
                 this->orbits[idy][idx].reserve( this->_opts->max_iterations );
             }
+        }
     }
 }
 
@@ -92,7 +94,9 @@ void Generator::_preRow() {
 } // Empty
 
 void Generator::_preOrbit() {
-    this->orbits[this->_row][this->_col].push_back( this->_z );
+    if( !this->_opts->skiporbits ) {
+        this->orbits[this->_row][this->_col].push_back( this->_z );
+    }
 }
 
 void Generator::_preIterate() {
@@ -104,7 +108,9 @@ void Generator::_iterate() {
 
 void Generator::_postIterate() {
     this->_zabs = abs( this->_z );
-    this->orbits[this->_row][this->_col].push_back( this->_z );
+    if( !this->_opts->skiporbits ) {
+        this->orbits[this->_row][this->_col].push_back( this->_z );
+    }
 }
 
 bool Generator::_bailoutTest() {
@@ -124,7 +130,7 @@ void Generator::_postOrbit() {
         this->_argument = this->_idx + 1 + this->_iterate_fraction;
         this->results[this->_row].push_back( this->_argument );
     } else {
-        this->results[this->_row].push_back( 0 );
+        this->results[this->_row].push_back( -1 );
     }
 }
 
