@@ -1,0 +1,19 @@
+================================================================================
+-  mwfractal                                                                   -
+-  Copyright 2013 Neil E. Moore, Christopher J. Willcock                       -
+================================================================================
+
+   This product includes software authored by Neil E. Moore.
+    <contact@example.com>
+
+   This product includes software authored by Christopher J.Willcock.
+    <willcock@gmail.com>
+
+   This software requires linking with the Boost C++ Libraries.
+    For more information on Boost, visit:
+    --- http://boost.org/.
+
+   This software requires linking with the Magick++ ImageMagick API.
+    For more information on Magick++, visit:
+    --- http://www.imagemagick.org/script/magick++.php
+ 
