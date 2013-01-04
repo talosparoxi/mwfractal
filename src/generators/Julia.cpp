@@ -34,6 +34,7 @@ void Julia::_preLoop() {
 
 void Julia::_preOrbit() {
     this->_z = this->_p;
+    Generator::_preOrbit();
 }
 
 void Julia::_iterate() {

@@ -28,7 +28,7 @@ Generator::Generator( boost::shared_ptr<ProgramOptions> opts ) {
     this->_py = ( ( opts->max_im - opts->min_im ) / this->_dp_im.imag() + 1 );
     this->_total_points = this->_px * this->_py;
 
-    this->_row = 0;
+    this->_row = this->_col = 0;
     this->_acc_iterations = this->_current_iteration = this->_current_point = 0;
     this->_progress = 0;
     this->_progress_diff = (float)this->_total_points / 80;
@@ -39,6 +39,14 @@ Generator::Generator( boost::shared_ptr<ProgramOptions> opts ) {
     this->results.resize( this->_py );
     for( idy = 0; idy < this->_py; idy++ ) {
             this->results[idy].reserve( this->_px );
+    }
+    int idx;
+    this->orbits.resize( this->_py );
+    for( idy = 0; idy < this->_py; idy++ ) {
+            this->orbits[idy].resize( this->_px );
+            for( idx = 0; idx < this->_px; idx++ ) {
+                this->orbits[idy][idx].reserve( this->_opts->max_iterations );
+            }
     }
 }
 
@@ -84,7 +92,8 @@ void Generator::_preRow() {
 } // Empty
 
 void Generator::_preOrbit() {
-} // Empty
+    this->orbits[this->_row][this->_col].push_back( this->_z );
+}
 
 void Generator::_preIterate() {
 } // Empty
@@ -95,6 +104,7 @@ void Generator::_iterate() {
 
 void Generator::_postIterate() {
     this->_zabs = abs( this->_z );
+    this->orbits[this->_row][this->_col].push_back( this->_z );
 }
 
 bool Generator::_bailoutTest() {
@@ -132,6 +142,7 @@ void Generator::_postRow() {
     }
 
     this->_row++;
+    this->_col = 0;
 }
 
 void Generator::_postColumn() {
@@ -140,6 +151,8 @@ void Generator::_postColumn() {
 
     this->_p += this->_dp_re;
     this->_current_point++;
+
+    this->_col++;
 }
 
 void Generator::_postLoop() {
@@ -152,6 +165,21 @@ void Generator::_postLoop() {
         for( this->_uniq_itr = this->_uniques.begin(); this->_uniq_itr != this->_uniques.end(); this->_uniq_itr++ ) {
             pc = floor( ( (*this->_uniq_itr).second / this->_total_points ) * 100000 ) / 1000;
             cout << endl << "  " << (*this->_uniq_itr).first << ":\t" << (*this->_uniq_itr).second << "\t" << pc << "%" << endl;
+        }
+    }
+
+    if( this->_opts->showorbits ) {
+        vector<vector<vector<complex<float> > > >::iterator row_itr;
+        vector<vector<complex<float> > >::iterator col_itr;
+        vector<complex<float> >::iterator orbit_itr;
+        cout << endl << "Orbits of each point:" << endl;
+        for( row_itr = this->orbits.begin(); row_itr != this->orbits.end(); row_itr++ ) {
+            for( col_itr = (*row_itr).begin(); col_itr != (*row_itr).end(); col_itr++ ) {
+                for( orbit_itr = (*col_itr).begin(); orbit_itr != (*col_itr).end(); orbit_itr++ ) {
+                    cout << "[" << row_itr - this->orbits.begin() << "," << col_itr - (*row_itr).begin() << "]-orbit[" << orbit_itr - (*col_itr).begin() << "]: " << abs((*orbit_itr)) << endl;
+                }
+                cout << endl;
+            }
         }
     }
 }

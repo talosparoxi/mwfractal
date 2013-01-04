@@ -31,6 +31,7 @@ Mandelbrot::~Mandelbrot() {
 void Mandelbrot::_preOrbit() {
     this->_c = this->_p;
     this->_z = complex<float>( 0, 0 );
+    Generator::_preOrbit();
 }
 
 void Mandelbrot::_iterate() {
