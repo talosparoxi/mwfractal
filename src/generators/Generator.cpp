@@ -176,7 +176,7 @@ void Generator::_postLoop() {
         for( row_itr = this->orbits.begin(); row_itr != this->orbits.end(); row_itr++ ) {
             for( col_itr = (*row_itr).begin(); col_itr != (*row_itr).end(); col_itr++ ) {
                 for( orbit_itr = (*col_itr).begin(); orbit_itr != (*col_itr).end(); orbit_itr++ ) {
-                    cout << "[" << row_itr - this->orbits.begin() << "," << col_itr - (*row_itr).begin() << "]-orbit[" << orbit_itr - (*col_itr).begin() << "]: " << abs((*orbit_itr)) << endl;
+                    cout << "[" << row_itr - this->orbits.begin() << "," << col_itr - (*row_itr).begin() << "]-orbit[" << orbit_itr - (*col_itr).begin() << "]: " << (*orbit_itr) << endl;
                 }
                 cout << endl;
             }
