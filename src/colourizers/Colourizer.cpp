@@ -14,6 +14,8 @@
 
 #include "Colourizer.hpp"
 
+#include "../utils.hpp"
+
 using namespace JS;
 using namespace Magick;
 using namespace std;
@@ -53,7 +55,7 @@ void Colourizer::setResults( std::vector<std::vector<float> >* results ) {
     this->results = results;
     std::vector<float>::iterator min_temp, max_temp;
     for( this->_idy = 0; this->_idy < this->_py; this->_idy++ ) {
-        min_temp = min_element( (*this->results)[this->_idy].begin(), (*this->results)[this->_idy].end() );
+        min_temp = min_element( (*this->results)[this->_idy].begin(), (*this->results)[this->_idy].end(), findmin );
         max_temp = max_element( (*this->results)[this->_idy].begin(), (*this->results)[this->_idy].end() );
         if( this->_lo_iteration > (*min_temp) ) {
             this->_lo_iteration = (*min_temp);
@@ -99,10 +101,11 @@ bool Colourizer::run() {
 
     cout << endl << endl << "Completed " << this->_total_iterations << " pixels" << endl;
     cout.flush();
-
+	
     return true;
 }
 
 void Colourizer::writeImage( const char* filename ) {
     this->_image.write( filename );
 }
+

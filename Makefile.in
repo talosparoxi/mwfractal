@@ -68,7 +68,8 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
-am_mwfractal_OBJECTS = src/main.$(OBJEXT) src/ProgramOptions.$(OBJEXT) \
+am_mwfractal_OBJECTS = src/main.$(OBJEXT) src/utils.$(OBJEXT) \
+	src/ProgramOptions.$(OBJEXT) \
 	src/generators/Generator.$(OBJEXT) \
 	src/generators/Julia.$(OBJEXT) \
 	src/generators/Mandelbrot.$(OBJEXT) \
@@ -205,7 +206,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_CPPFLAGS = $(MAGICK_CFLAGS)
 mwfractal_LDADD = $(MAGICK_LIBS)
-mwfractal_SOURCES = src/main.cpp src/ProgramOptions.cpp src/ProgramOptions.hpp src/generators/Generator.cpp src/generators/Generator.hpp src/generators/Julia.cpp src/generators/Julia.hpp src/generators/Mandelbrot.cpp src/generators/Mandelbrot.hpp src/colourizers/Colourizer.cpp src/colourizers/Colourizer.hpp src/colourizers/NEM_Violet_to_Red.cpp src/colourizers/NEM_Violet_to_Red.hpp src/colourizers/NEM_Violet_to_Red_Lightness.cpp src/colourizers/NEM_Violet_to_Red_Lightness.hpp src/colourizers/NEM_White_to_Black.cpp src/colourizers/NEM_White_to_Black.hpp src/colourizers/NEM_Black_to_White.cpp src/colourizers/NEM_Black_to_White.hpp
+mwfractal_SOURCES = src/main.cpp src/utils.cpp src/utils.hpp src/ProgramOptions.cpp src/ProgramOptions.hpp src/generators/Generator.cpp src/generators/Generator.hpp src/generators/Julia.cpp src/generators/Julia.hpp src/generators/Mandelbrot.cpp src/generators/Mandelbrot.hpp src/colourizers/Colourizer.cpp src/colourizers/Colourizer.hpp src/colourizers/NEM_Violet_to_Red.cpp src/colourizers/NEM_Violet_to_Red.hpp src/colourizers/NEM_Violet_to_Red_Lightness.cpp src/colourizers/NEM_Violet_to_Red_Lightness.hpp src/colourizers/NEM_White_to_Black.cpp src/colourizers/NEM_White_to_Black.hpp src/colourizers/NEM_Black_to_White.cpp src/colourizers/NEM_Black_to_White.hpp
 EXTRA_DIST = bootstrap LICENSE NOTICE
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -307,6 +308,7 @@ src/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) src/$(DEPDIR)
 	@: > src/$(DEPDIR)/$(am__dirstamp)
 src/main.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
+src/utils.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/ProgramOptions.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/generators/$(am__dirstamp):
@@ -357,12 +359,14 @@ mostlyclean-compile:
 	-rm -f src/generators/Julia.$(OBJEXT)
 	-rm -f src/generators/Mandelbrot.$(OBJEXT)
 	-rm -f src/main.$(OBJEXT)
+	-rm -f src/utils.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ProgramOptions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/utils.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/colourizers/$(DEPDIR)/Colourizer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/colourizers/$(DEPDIR)/NEM_Black_to_White.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/colourizers/$(DEPDIR)/NEM_Violet_to_Red.Po@am__quote@
