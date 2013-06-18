@@ -31,8 +31,8 @@ NEM_Violet_to_Red_Lightness::~NEM_Violet_to_Red_Lightness() {
 }
 
 bool NEM_Violet_to_Red_Lightness::generatePalette() {
-    for( this->_idy = 0; this->_idy < this->_opts->number_lightness; this->_idy++ ) {
-        for( this->_idx = 0; this->_idx < this->_opts->number_hue; this->_idx++ ) {
+    for( this->_idy = 0; this->_idy <= this->_opts->number_lightness; this->_idy++ ) {
+        for( this->_idx = 0; this->_idx <= this->_opts->number_hue; this->_idx++ ) {
             if( this->_opts->colour_weighting == 0.0 ) {
                 this->_h = this->_spectral_diff * this->_idx / this->_opts->number_hue + this->_opts->spectral_min;
             } else if( this->_opts->colour_weighting > 0.0 ) {
@@ -74,7 +74,7 @@ bool NEM_Violet_to_Red_Lightness::generatePalette() {
             this->_g = this->_g + this->_m;
             this->_b = this->_b + this->_m;
 
-            this->_palette[this->_idx + ( this->_idy - 1 ) * this->_opts->number_hue] = ColorRGB( this->_r, this->_g, this->_b );
+            this->_palette[this->_idx + this->_idy * this->_opts->number_hue] = ColorRGB( this->_r, this->_g, this->_b );
         }
     }
 

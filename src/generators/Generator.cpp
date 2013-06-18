@@ -24,8 +24,11 @@ Generator::Generator( boost::shared_ptr<ProgramOptions> opts ) {
     this->_p = complex<float>( opts->min_re, opts->max_im );
     this->_dp_re = complex<float>( 1 / pow( 2, opts->dprx ), 0 );
     this->_dp_im = complex<float>( 0, 1 / pow( 2, opts->dpix ) );
-    this->_px = ( ( opts->max_re - opts->min_re ) / this->_dp_re.real() + 1 );
-    this->_py = ( ( opts->max_im - opts->min_im ) / this->_dp_im.imag() + 1 );
+    this->_px = ( ( opts->max_re - opts->min_re ) / this->_dp_re.real() );
+    if( this->_px == 0 ) this->_px = 1;
+    this->_py = ( ( opts->max_im - opts->min_im ) / this->_dp_im.imag() );
+    if( this->_py == 0 ) this->_py = 1;
+    
     this->_total_points = this->_px * this->_py;
 
     this->_row = this->_col = 0;
@@ -127,6 +130,7 @@ void Generator::_postOrbit() {
     }
     if( this->_bailoutTest() ) {
         this->_iterate_fraction = log( this->_ln_cutoff / log( this->_zabs ) ) / this->_ln_2;
+//        this->_iterate_fraction = ( log( this->_zabs ) - this->_ln_cutoff ) / ( this->_opts->cutoff - this->_ln_cutoff );
         this->_argument = this->_idx + 1 + this->_iterate_fraction;
         this->results[this->_row].push_back( this->_argument );
     } else {

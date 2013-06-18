@@ -30,7 +30,7 @@ NEM_Violet_to_Red::~NEM_Violet_to_Red() {
 }
 
 bool NEM_Violet_to_Red::generatePalette() {
-    for( this->_idx = 0; this->_idx < this->_opts->number_hue; this->_idx++ ) {
+    for( this->_idx = 0; this->_idx <= this->_opts->number_hue; this->_idx++ ) {
         if( this->_opts->colour_weighting == 0.0 ) {
             this->_h = this->_spectral_diff * this->_idx / this->_opts->number_hue + this->_opts->spectral_min;
         } else if( this->_opts->colour_weighting > 0.0 ) {

@@ -34,6 +34,7 @@ public:
     Colourizer( const Colourizer& orig );
     virtual ~Colourizer();
     virtual bool generatePalette();
+    virtual bool preRun();
     bool run();
     void setResults( std::vector<std::vector<float> >* results );
     void writeImage( const char* filename );

@@ -25,6 +25,8 @@
 #include "colourizers/NEM_Violet_to_Red_Lightness.hpp"
 #include "colourizers/NEM_Black_to_White.hpp"
 #include "colourizers/NEM_White_to_Black.hpp"
+#include "colourizers/NEM_Black_to_White_Converge_White.hpp"
+#include "colourizers/NEM_White_to_Black_Converge_White.hpp"
 
 using namespace std;
 using namespace JS;
@@ -83,6 +85,14 @@ int main(int argc, char** argv) {
 
         case 4:
             colourizer.reset( new NEM_Black_to_White( opts ) );
+            break;
+
+        case 5:
+            colourizer.reset( new NEM_White_to_Black_Converge_White( opts ) );
+            break;
+
+        case 6:
+            colourizer.reset( new NEM_Black_to_White_Converge_White( opts ) );
             break;
 
         default:

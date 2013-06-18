@@ -27,22 +27,23 @@ Colourizer::Colourizer( boost::shared_ptr<ProgramOptions> opts ) {
     this->_lightness_diff = opts->lightness_max - opts->lightness_min;
     this->_arctan_horiz_scaler = opts->colour_weighting / opts->number_hue;
     this->_arctan_vert_scaler = atan( opts->colour_weighting );
-    this->_palette[-1] = ColorRGB( 0, 0, 0 );
 
     float dp_re = 1 / pow( 2, opts->dprx );
     float dp_im = 1 / pow( 2, opts->dpix );
 
-    this->_px = ( ( opts->max_re - opts->min_re ) / dp_re + 1 );
-    this->_py = ( ( opts->max_im - opts->min_im ) / dp_im + 1 );
+    this->_px = ( ( opts->max_re - opts->min_re ) / dp_re );
+    if( this->_px == 0 ) this->_px = 1;
+    this->_py = ( ( opts->max_im - opts->min_im ) / dp_im );
+    if( this->_py == 0 ) this->_py = 1;
     this->_total_iterations = this->_px * this->_py;
     this->_current_iteration = 0;
     this->_progress_diff = this->_total_iterations / 80;
     this->_progress = 0;
-	this->_lo_iteration = 0xFFFFFFFF;
-	this->_hi_iteration = 0;
+    this->_lo_iteration = 0xFFFFFFFF;
+    this->_hi_iteration = 0;
     InitializeMagick( "" );
     this->_image = Image( Geometry( this->_px, this->_py ), "black" );
-	this->_image.type( TrueColorType );
+    this->_image.type( TrueColorType );
 }
 
 Colourizer::Colourizer( const Colourizer& orig ) {
@@ -64,14 +65,20 @@ void Colourizer::setResults( std::vector<std::vector<float> >* results ) {
             this->_hi_iteration = (*max_temp);
         }
     }
-    this->_colour_scaler = this->_opts->number_hue / this->_hi_iteration;
+    this->_colour_scaler = this->_opts->number_hue / ( this->_hi_iteration - this->_lo_iteration );
 }
 
 bool Colourizer::generatePalette() {
     return false;
 }
 
+bool Colourizer::preRun() {
+    return false;
+}
+
 bool Colourizer::run() {
+    this->preRun();
+    
     PixelPacket *pixel_cache = this->_image.getPixels( 0, 0, this->_px, this->_py );
     PixelPacket *next_pixel = pixel_cache;
 

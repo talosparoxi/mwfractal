@@ -49,8 +49,8 @@ ProgramOptions::ProgramOptions( int argc, char **argv ) {
 
     bpo::options_description graphics( "Graphical Options" );
     graphics.add_options()
-        ( "colourizer", bpo::value<int>(&this->colourizer)->default_value(1), "Colourizer (1 = violet(inner) to red(outer), 2 = violet(inner) to red(outer) w/ lightness, 3 = white(inner) to black(outer), 4 = black(inner) to white(outer))" )
-        ( "number_hue", bpo::value<int>(&this->number_hue)->default_value(65536), "Number of (diverging) hue values" )
+        ( "colourizer", bpo::value<int>(&this->colourizer)->default_value(1), "Colourizer (1 = violet(inner) to red(outer), 2 = violet(inner) to red(outer) w/ lightness, 3 = white(inner) to black(outer), 4 = black(inner) to white(outer), 5 = white(inner) to black(outer) w/ white convergence, 6 = black(inner) to white(outer) w/ black convergence" )
+        ( "number_hue", bpo::value<int>(&this->number_hue)->default_value(65535), "Number of (diverging) hue values" )
         ( "number_lightness", bpo::value<int>(&this->number_lightness)->default_value(100), "Number of (diverging) lightness values" )
         ( "spectral_minimum", bpo::value<float>(&this->spectral_min)->default_value(0.0), "Minimum spectral colour (red = 0.0, yellow = 1.0, green = 2.0, cyan = 3.0, royal = 4.0, violet = 5.0)" )
         ( "spectral_maximum", bpo::value<float>(&this->spectral_max)->default_value(5.0), "Maximum spectral colour (red = 0.0, yellow = 1.0, green = 2.0, cyan = 3.0, royal = 4.0, violet = 5.0)" )
