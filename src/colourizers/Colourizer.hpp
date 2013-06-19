@@ -34,7 +34,7 @@ public:
     Colourizer( const Colourizer& orig );
     virtual ~Colourizer();
     virtual bool generatePalette();
-    virtual bool preRun();
+	bool paletteProgressTick( int current );
     bool run();
     void setResults( std::vector<std::vector<float> >* results );
     void writeImage( const char* filename );
@@ -50,11 +50,12 @@ protected:
 
     std::map<int, Magick::ColorRGB> _palette;
 
-    int _px, _py, _idy, _idx, _total_iterations, _current_iteration, _temp, _progress;
-    float _progress_diff, _lo_iteration, _hi_iteration;
+    int _px, _py, _idy, _idx, _total_iterations, _current_iteration, _temp, _progress, _palette_progress;
+    float _progress_diff, _palette_progress_diff, _lo_iteration, _hi_iteration;
     double _r, _g, _b, _h, _s, _l, _chroma, _x, _m;
     double _frac_part, _ones_digit, _spectral_diff, _lightness_diff;
     double _colour_scaler, _arctan_horiz_scaler, _arctan_vert_scaler;
+
 };
 
 

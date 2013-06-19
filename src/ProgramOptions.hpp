@@ -25,8 +25,8 @@ public:
     virtual ~ProgramOptions();
     int getStatus();
 
-    bool drawgraph, showuniques, autoopen, showorbits, skiporbits;
-    int max_iterations, gx, gy, colourizer, max_colours, generator, number_hue, number_lightness;
+    bool drawgraph, showuniques, autoopen, showorbits, skiporbits, invertspectrum, convergewhite;
+    int max_iterations, gx, gy, colourizer, max_colours, generator, number_hue, number_lightness, width, height;
     float max_re, max_im, min_re, min_im, cutoff, cr, ci, dprx, dpix;
     float spectral_min, spectral_max, lightness_min, lightness_max, colour_weighting;
 

@@ -73,6 +73,7 @@ bool NEM_Violet_to_Red::generatePalette() {
         this->_b = this->_b + this->_m;
 
         this->_palette[this->_idx] = ColorRGB( this->_r, this->_g, this->_b );
+		this->paletteProgressTick( this->_idx );
     }
 
     return true;

@@ -44,6 +44,7 @@ bool NEM_White_to_Black::generatePalette() {
         this->_b = this->_l;
 
         this->_palette[this->_idx] = ColorRGB( this->_r, this->_g, this->_b );
+		this->paletteProgressTick( this->_idx );
     }
 
     return true;

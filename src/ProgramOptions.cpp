@@ -36,8 +36,6 @@ ProgramOptions::ProgramOptions( int argc, char **argv ) {
         ( "iterations", bpo::value<int>(&this->max_iterations)->default_value(32), "Number of iterations per pixel" )
         ( "c_real", bpo::value<float>(&this->cr)->default_value(-0.835), "Real part of c" )
         ( "c_imag", bpo::value<float>(&this->ci)->default_value(-0.2321), "Imaginary part of c" )
-        ( "dp_real", bpo::value<float>(&this->dprx)->default_value(4), "" )
-        ( "dp_imag", bpo::value<float>(&this->dpix)->default_value(4), "" )
         ( "min_real", bpo::value<float>(&this->min_re)->default_value(-2), "" )
         ( "max_real", bpo::value<float>(&this->max_re)->default_value(2), "" )
         ( "min_imag", bpo::value<float>(&this->min_im)->default_value(-1.125), "" )
@@ -49,7 +47,9 @@ ProgramOptions::ProgramOptions( int argc, char **argv ) {
 
     bpo::options_description graphics( "Graphical Options" );
     graphics.add_options()
-        ( "colourizer", bpo::value<int>(&this->colourizer)->default_value(1), "Colourizer (1 = violet(inner) to red(outer), 2 = violet(inner) to red(outer) w/ lightness, 3 = white(inner) to black(outer), 4 = black(inner) to white(outer), 5 = white(inner) to black(outer) w/ white convergence, 6 = black(inner) to white(outer) w/ black convergence" )
+        ( "width", bpo::value<int>(&this->width)->default_value(320), "Output image width" )
+        ( "height", bpo::value<int>(&this->height)->default_value(180), "Output image height" )
+        ( "colourizer", bpo::value<int>(&this->colourizer)->default_value(1), "Colourizer (1 = violet(inner) to red(outer), 2 = violet(inner) to red(outer) w/ lightness, 3 = white(inner) to black(outer))" )
         ( "number_hue", bpo::value<int>(&this->number_hue)->default_value(65535), "Number of (diverging) hue values" )
         ( "number_lightness", bpo::value<int>(&this->number_lightness)->default_value(100), "Number of (diverging) lightness values" )
         ( "spectral_minimum", bpo::value<float>(&this->spectral_min)->default_value(0.0), "Minimum spectral colour (red = 0.0, yellow = 1.0, green = 2.0, cyan = 3.0, royal = 4.0, violet = 5.0)" )
@@ -57,10 +57,12 @@ ProgramOptions::ProgramOptions( int argc, char **argv ) {
         ( "lightness_minimum", bpo::value<float>(&this->lightness_min)->default_value(0.3), "Minimum lightness (0.0 = black, 1.0 = white)" )
         ( "lightness_maximum", bpo::value<float>(&this->lightness_max)->default_value(0.7), "Maximum lightness (0.0 = black, 1.0 = white)" )
         ( "colour_weighting", bpo::value<float>(&this->colour_weighting)->default_value(0.0), "Colour weighting is complicated...try a real floating pt number (+ or -) and see what happens" )
-        ( "drawgraph", bpo::value<bool>(&this->drawgraph)->zero_tokens(), "Overlay a graph on the image" )
-        ( "graphxplot", bpo::value<int>(&this->gx)->default_value(50), "Size in pixels of the x axis plot lines" )
-        ( "graphyplot", bpo::value<int>(&this->gy)->default_value(50), "Size in pixels of the y axis plot lines" )
-        ( "autoopen,a", bpo::value<bool>(&this->autoopen)->zero_tokens(), "Automatically open the generated image in the default viewer" );
+//        ( "drawgraph", bpo::value<bool>(&this->drawgraph)->zero_tokens(), "Overlay a graph on the image" )
+//        ( "graphxplot", bpo::value<int>(&this->gx)->default_value(50), "Size in pixels of the x axis plot lines" )
+//        ( "graphyplot", bpo::value<int>(&this->gy)->default_value(50), "Size in pixels of the y axis plot lines" )
+        ( "autoopen,a", bpo::value<bool>(&this->autoopen)->zero_tokens(), "Automatically open the generated image in the default viewer" )
+        ( "invertspectrum,i", bpo::value<bool>(&this->invertspectrum)->zero_tokens(), "Invert the colour spectrum of the colourizer" )
+        ( "convergewhite,w", bpo::value<bool>(&this->convergewhite)->zero_tokens(), "Colour converging pixels white (default is black)" );
 
     bpo::options_description hidden( "Hidden" );
 

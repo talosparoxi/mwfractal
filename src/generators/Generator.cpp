@@ -21,13 +21,17 @@ Generator::Generator( boost::shared_ptr<ProgramOptions> opts ) {
     this->_opts = opts;
 
     this->_c = complex<float>( 0, 0 );
-    this->_p = complex<float>( opts->min_re, opts->max_im );
-    this->_dp_re = complex<float>( 1 / pow( 2, opts->dprx ), 0 );
-    this->_dp_im = complex<float>( 0, 1 / pow( 2, opts->dpix ) );
-    this->_px = ( ( opts->max_re - opts->min_re ) / this->_dp_re.real() );
-    if( this->_px == 0 ) this->_px = 1;
-    this->_py = ( ( opts->max_im - opts->min_im ) / this->_dp_im.imag() );
-    if( this->_py == 0 ) this->_py = 1;
+	this->_px = opts->width;
+    if( this->_px == 0 ) {
+		this->_px = 1;
+    }
+	this->_py = opts->height;
+    if( this->_py == 0 ) {
+		this->_py = 1;
+	}
+    this->_dp_re = complex<float>( ( opts->max_re - opts->min_re ) / opts->width, 0 );
+    this->_dp_im = complex<float>( 0, ( opts->max_im - opts->min_im ) / opts->height );
+    this->_p = complex<float>( opts->min_re + this->_dp_re.real() / 2, opts->max_im - this->_dp_im.imag() / 2 );
     
     this->_total_points = this->_px * this->_py;
 
@@ -62,10 +66,11 @@ Generator::~Generator() {
 }
 
 bool Generator::run() {
-    this->_preLoop(); // __PRE_LOOP__
-    while( this->_p.imag() >= this->_opts->min_im ) {
+    static int x = 0;
+	this->_preLoop(); // __PRE_LOOP__
+    while( this->_p.imag() > this->_opts->min_im ) {
         this->_preRow(); // __PRE_ROW__
-        while( this->_p.real() <= this->_opts->max_re ) {
+        while( this->_p.real() < this->_opts->max_re ) {
             this->_preColumn(); // __PRE_COLUMN__
             this->_preOrbit(); // __PRE_ORBIT__
             for( this->_idx = 0; this->_idx < this->_opts->max_iterations; this->_idx++ ) {
