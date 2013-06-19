@@ -24,6 +24,7 @@
 #include "colourizers/NEM_Violet_to_Red.hpp"
 #include "colourizers/NEM_Violet_to_Red_Lightness.hpp"
 #include "colourizers/NEM_White_to_Black.hpp"
+#include "colourizers/MW_Darts_Violet_to_Red.hpp"
 
 using namespace std;
 using namespace JS;
@@ -80,6 +81,10 @@ int main(int argc, char** argv) {
             colourizer.reset( new NEM_White_to_Black( opts ) );
             break;
 
+        case 4:
+            colourizer.reset( new MW_Darts_Violet_to_Red( opts ) );
+            break;
+
         default:
             cout << " (!) Invalid Colourizer '" << opts->colourizer << "'" << endl;
             exit( EXIT_FAILURE );
@@ -87,6 +92,7 @@ int main(int argc, char** argv) {
     }
 
     colourizer->setResults( &generator->results );
+    colourizer->setOrbits( &generator->orbits );
 
     cout << endl << "==== Phase 2 ====: Palette Selection..." << endl;
     cout << endl << "|0%------------------------------------|-50%-------------------------------100%|" << endl;

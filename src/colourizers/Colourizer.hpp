@@ -19,9 +19,10 @@
 #include <ImageMagick/Magick++.h>
 
 #include <algorithm>
-#include <vector>
 #include <cmath>
+#include <complex>
 #include <iostream>
+#include <vector>
 
 #include "../ProgramOptions.hpp"
 
@@ -35,11 +36,13 @@ public:
     virtual ~Colourizer();
     virtual bool generatePalette();
 	bool paletteProgressTick( int current );
-    bool run();
+    virtual bool run();
     void setResults( std::vector<std::vector<float> >* results );
+    void setOrbits( std::vector<std::vector<std::vector<std::complex<float> > > >* orbits );
     void writeImage( const char* filename );
 
     std::vector<std::vector<float> >* results;
+    std::vector<std::vector<std::vector<std::complex<float> > > >* orbits;
 
 private:
 

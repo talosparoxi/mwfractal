@@ -76,6 +76,10 @@ void Colourizer::setResults( std::vector<std::vector<float> >* results ) {
     this->_colour_scaler = this->_opts->number_hue / ( this->_hi_iteration - this->_lo_iteration );
 }
 
+void Colourizer::setOrbits( std::vector<std::vector<std::vector<std::complex<float> > > >* orbits ) {
+	this->orbits = orbits;
+}
+
 bool Colourizer::generatePalette() {
     return false;
 }
@@ -109,7 +113,14 @@ bool Colourizer::run() {
 					} else {
 						*next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
 					}
-                } else {
+                } else if ( this->_opts->colourizer == 4 ) {
+					this->_frac_part = 0.618034;
+					if( this->_opts->invertspectrum ) {
+						*next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
+					} else {
+						*next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
+					}
+				} else {
 					if( this->_opts->invertspectrum ) {
 	                    *next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler )];
 					} else {

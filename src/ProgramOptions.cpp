@@ -49,7 +49,7 @@ ProgramOptions::ProgramOptions( int argc, char **argv ) {
     graphics.add_options()
         ( "width", bpo::value<int>(&this->width)->default_value(320), "Output image width" )
         ( "height", bpo::value<int>(&this->height)->default_value(180), "Output image height" )
-        ( "colourizer", bpo::value<int>(&this->colourizer)->default_value(1), "Colourizer (1 = violet(inner) to red(outer), 2 = violet(inner) to red(outer) w/ lightness, 3 = white(inner) to black(outer))" )
+        ( "colourizer", bpo::value<int>(&this->colourizer)->default_value(1), "Colourizer (1 = violet(inner) to red(outer), 2 = violet(inner) to red(outer) w/ lightness, 3 = white(inner) to black(outer), 4 = Darts!)" )
         ( "number_hue", bpo::value<int>(&this->number_hue)->default_value(65535), "Number of (diverging) hue values" )
         ( "number_lightness", bpo::value<int>(&this->number_lightness)->default_value(100), "Number of (diverging) lightness values" )
         ( "spectral_minimum", bpo::value<float>(&this->spectral_min)->default_value(0.0), "Minimum spectral colour (red = 0.0, yellow = 1.0, green = 2.0, cyan = 3.0, royal = 4.0, violet = 5.0)" )
