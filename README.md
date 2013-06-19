@@ -1,3 +1,7 @@
 mwfractal
 =========
-nothing doing
+
+Installation Instructions
+ ./bootstrap
+ ./configure
+ make
