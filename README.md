@@ -4,4 +4,6 @@ mwfractal
 ### Installation Instructions
 ./bootstrap  
 ./configure  
-make  
+make 
+
+### Lollipop 
