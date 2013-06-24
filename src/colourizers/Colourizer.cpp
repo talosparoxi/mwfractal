@@ -66,13 +66,14 @@ void Colourizer::setResults( std::vector<std::vector<float> >* results ) {
     for( this->_idy = 0; this->_idy < this->_py; this->_idy++ ) {
         min_temp = min_element( (*this->results)[this->_idy].begin(), (*this->results)[this->_idy].end(), findmin );
         max_temp = max_element( (*this->results)[this->_idy].begin(), (*this->results)[this->_idy].end() );
-        if( this->_lo_iteration > (*min_temp) ) {
+		if( this->_lo_iteration > (*min_temp) ) {
             this->_lo_iteration = (*min_temp);
         }
         if( this->_hi_iteration < (*max_temp) ) {
             this->_hi_iteration = (*max_temp);
         }
     }
+	cout << this->_lo_iteration << ", " << this->_hi_iteration << endl;
     this->_colour_scaler = this->_opts->number_hue / ( this->_hi_iteration - this->_lo_iteration );
 }
 
@@ -113,14 +114,7 @@ bool Colourizer::run() {
 					} else {
 						*next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
 					}
-                } else if ( this->_opts->colourizer == 4 ) {
-					this->_frac_part = 0.618034;
-					if( this->_opts->invertspectrum ) {
-						*next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
-					} else {
-						*next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
-					}
-				} else {
+                } else {
 					if( this->_opts->invertspectrum ) {
 	                    *next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler )];
 					} else {

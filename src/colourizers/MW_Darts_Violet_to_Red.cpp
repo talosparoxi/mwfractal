@@ -43,7 +43,7 @@ bool MW_Darts_Violet_to_Red::generatePalette() {
             }
 
             this->_s = 1.0;
-            this->_l = this->_lightness_diff / ( this->_opts->number_lightness - 1 ) * ( this->_idy - 1 ) + this->_opts->lightness_min;
+            this->_l = this->_lightness_diff / this->_opts->number_lightness * this->_idy + this->_opts->lightness_min;
 
             this->_chroma = ( 1.0 - fabs( 2.0 * this->_l - 1.0 ) ) * this->_s;
             this->_x = this->_chroma * ( 1.0 - fabs( fmod( this->_h, 2.0 ) - 1.0 ) );
@@ -75,7 +75,7 @@ bool MW_Darts_Violet_to_Red::generatePalette() {
             this->_g = this->_g + this->_m;
             this->_b = this->_b + this->_m;
 
-            this->_palette[this->_idx + this->_idy * this->_opts->number_hue] = ColorRGB( this->_r, this->_g, this->_b );
+            this->_palette[this->_idx + this->_idy * ( this->_opts->number_hue + 1 )] = ColorRGB( this->_r, this->_g, this->_b );
         }
 		this->paletteProgressTick( this->_idy );
     }
