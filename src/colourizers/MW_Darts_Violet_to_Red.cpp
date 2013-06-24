@@ -31,7 +31,7 @@ MW_Darts_Violet_to_Red::~MW_Darts_Violet_to_Red() {
 }
 
 bool MW_Darts_Violet_to_Red::generatePalette() {
-	this->_palette_progress_diff = ( this->_opts->number_lightness + 1 ) / 80;
+	this->_palette_progress_diff = (float)this->_opts->number_lightness / 80;
     for( this->_idy = 0; this->_idy <= this->_opts->number_lightness; this->_idy++ ) {
         for( this->_idx = 0; this->_idx <= this->_opts->number_hue; this->_idx++ ) {
             if( this->_opts->colour_weighting == 0.0 ) {

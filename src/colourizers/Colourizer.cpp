@@ -41,7 +41,7 @@ Colourizer::Colourizer( boost::shared_ptr<ProgramOptions> opts ) {
     this->_current_iteration = 0;
     this->_progress_diff = (float)this->_total_iterations / 80;
     this->_progress = 0;
-    this->_palette_progress_diff = (float)( opts->number_hue + 1 ) / 80;
+    this->_palette_progress_diff = (float)opts->number_hue / 80;
     this->_palette_progress = 0;
     this->_lo_iteration = 0xFFFFFFFF;
     this->_hi_iteration = 0;

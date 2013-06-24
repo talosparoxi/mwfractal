@@ -31,7 +31,7 @@ NEM_Violet_to_Red_Lightness::~NEM_Violet_to_Red_Lightness() {
 }
 
 bool NEM_Violet_to_Red_Lightness::generatePalette() {
-	this->_palette_progress_diff = ( this->_opts->number_lightness + 1 ) / 80;
+	this->_palette_progress_diff = (float)this->_opts->number_lightness / 80;
     for( this->_idy = 0; this->_idy <= this->_opts->number_lightness; this->_idy++ ) {
         for( this->_idx = 0; this->_idx <= this->_opts->number_hue; this->_idx++ ) {
             if( this->_opts->colour_weighting == 0.0 ) {
