@@ -2,8 +2,6 @@ mwfractal
 =========
 
 ### Installation Instructions
-./bootstrap
-
-./configure
-
-make
+./bootstrap  
+./configure  
+make  
