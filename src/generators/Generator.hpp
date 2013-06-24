@@ -60,7 +60,7 @@ protected:
 
     boost::shared_ptr<ProgramOptions> _opts;
 
-    int _px, _py, _total_points, _idx, _temp, _row, _col, _progress;
+    int _px, _py, _ppx, _ppy, _total_points, _idx, _temp, _row, _col, _progress;
     float _acc_iterations, _current_iteration, _current_point, _progress_diff, _zabs;
     double _ln_2, _ln_cutoff, _iterate_fraction, _argument;
 

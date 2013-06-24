@@ -32,7 +32,7 @@ ProgramOptions::ProgramOptions( int argc, char **argv ) {
 
     bpo::options_description model( "Mathematical Model Options" );
     model.add_options()
-        ( "generator", bpo::value<int>(&this->generator)->default_value(1), "Generator model - 0: Mandelbrot, 1: Julia" )
+        ( "generator", bpo::value<int>(&this->generator)->default_value(1), "Generator model - 1: Julia, 2: Mandelbrot" )
         ( "iterations", bpo::value<int>(&this->max_iterations)->default_value(32), "Number of iterations per pixel" )
         ( "c_real", bpo::value<float>(&this->cr)->default_value(-0.835), "Real part of c" )
         ( "c_imag", bpo::value<float>(&this->ci)->default_value(-0.2321), "Imaginary part of c" )

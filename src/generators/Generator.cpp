@@ -33,6 +33,8 @@ Generator::Generator( boost::shared_ptr<ProgramOptions> opts ) {
     this->_dp_im = complex<float>( 0, ( opts->max_im - opts->min_im ) / opts->height );
     this->_p = complex<float>( opts->min_re + this->_dp_re.real() / 2, opts->max_im - this->_dp_im.imag() / 2 );
     
+	this->_ppx = this->_ppy = 0;
+
     this->_total_points = this->_px * this->_py;
 
     this->_row = this->_col = 0;
@@ -68,9 +70,11 @@ Generator::~Generator() {
 bool Generator::run() {
     static int x = 0;
 	this->_preLoop(); // __PRE_LOOP__
-    while( this->_p.imag() > this->_opts->min_im ) {
+//    while( this->_p.imag() > this->_opts->min_im ) {
+      while( this->_ppy < this->_opts->height ) {
         this->_preRow(); // __PRE_ROW__
-        while( this->_p.real() < this->_opts->max_re ) {
+//        while( this->_p.real() < this->_opts->max_re ) {
+          while( this->_ppx < this->_opts->width ) {
             this->_preColumn(); // __PRE_COLUMN__
             this->_preOrbit(); // __PRE_ORBIT__
             for( this->_idx = 0; this->_idx < this->_opts->max_iterations; this->_idx++ ) {
@@ -148,6 +152,9 @@ void Generator::_postRow() {
     this->_p = complex<float>( this->_opts->min_re, this->_p.imag() );
     this->_temp = floor( this->_current_point / this->_progress_diff );
 
+	this->_ppy++;
+	this->_ppx = 0;
+
     if( this->_temp > this->_progress ) {
         while( this->_progress < this->_temp ) {
             this->_progress++;
@@ -168,6 +175,7 @@ void Generator::_postColumn() {
     this->_current_point++;
 
     this->_col++;
+	this->_ppx++;
 }
 
 void Generator::_postLoop() {
