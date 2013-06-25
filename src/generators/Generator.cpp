@@ -205,4 +205,16 @@ void Generator::_postLoop() {
             }
         }
     }
+
+    if( this->_opts->showresults ) {
+        vector<vector<float> >::iterator row_itr;
+        vector<float>::iterator col_itr;
+        cout << endl << "Results for each point:" << endl << endl;
+        for( row_itr = this->results.begin(); row_itr != this->results.end(); row_itr++ ) {
+            for( col_itr = (*row_itr).begin(); col_itr != (*row_itr).end(); col_itr++ ) {
+                    cout << "[" << row_itr - this->results.begin() << "," << col_itr - (*row_itr).begin() << "]: " << (*col_itr) << endl;
+            }
+        }
+        cout << endl;
+    }
 }

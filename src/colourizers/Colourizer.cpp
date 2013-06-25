@@ -66,7 +66,7 @@ void Colourizer::setResults( std::vector<std::vector<float> >* results ) {
     for( this->_idy = 0; this->_idy < this->_py; this->_idy++ ) {
         min_temp = min_element( (*this->results)[this->_idy].begin(), (*this->results)[this->_idy].end(), findmin );
         max_temp = max_element( (*this->results)[this->_idy].begin(), (*this->results)[this->_idy].end() );
-        if( this->_lo_iteration > (*min_temp) ) {
+		if( this->_lo_iteration > (*min_temp) ) {
             this->_lo_iteration = (*min_temp);
         }
         if( this->_hi_iteration < (*max_temp) ) {
@@ -106,27 +106,11 @@ bool Colourizer::run() {
     for( this->_idy = 0; this->_idy < this->_py; this->_idy++ ) {
         for( this->_idx = 0; this->_idx < this->_px; this->_idx++ ) {
             if( (*this->results)[this->_idy][this->_idx] != -1 ) {
-                if( this->_opts->colourizer == 2 ) {
-                    this->_frac_part = modf( (*this->results)[this->_idy][this->_idx], &this->_ones_digit );
-					if( this->_opts->invertspectrum ) {
-						*next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
-					} else {
-						*next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
-					}
-                } else if ( this->_opts->colourizer == 4 ) {
-					this->_frac_part = 0.618034;
-					if( this->_opts->invertspectrum ) {
-						*next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
-					} else {
-						*next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
-					}
+				if( this->_opts->invertspectrum ) {
+					*next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler )];
 				} else {
-					if( this->_opts->invertspectrum ) {
-	                    *next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler )];
-					} else {
-	                    *next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler )];
-					}
-                }
+					*next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler )];
+				}
             }
             *next_pixel++;
         }

@@ -26,6 +26,7 @@ public:
     NEM_Violet_to_Red_Lightness( const NEM_Violet_to_Red_Lightness& orig );
     virtual ~NEM_Violet_to_Red_Lightness();
     bool generatePalette();
+	bool run();
 
 private:
 
