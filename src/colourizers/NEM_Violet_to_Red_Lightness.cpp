@@ -75,14 +75,46 @@ bool NEM_Violet_to_Red_Lightness::generatePalette() {
             this->_g = this->_g + this->_m;
             this->_b = this->_b + this->_m;
 
-			if( ( this->_idx == 0 ) && ( this->_idy == 0  ) ) {
-				cout << this->_r << ", " << this->_g << ", " << this->_b << endl;
-			}
-
-            this->_palette[this->_idx + this->_idy * ( this->_opts->number_hue + 1 )] = ColorRGB( this->_r, this->_g, this->_b );
+            this->_palette[this->_idx + this->_idy * this->_opts->number_hue] = ColorRGB( this->_r, this->_g, this->_b );
         }
 		this->paletteProgressTick( this->_idy );
     }
+
+    return true;
+}
+
+bool NEM_Violet_to_Red_Lightness::run() {
+	int palette_size = this->_palette.size() - 1;
+
+    PixelPacket *pixel_cache = this->_image.getPixels( 0, 0, this->_px, this->_py );
+    PixelPacket *next_pixel = pixel_cache;
+
+    for( this->_idy = 0; this->_idy < this->_py; this->_idy++ ) {
+        for( this->_idx = 0; this->_idx < this->_px; this->_idx++ ) {
+            if( (*this->results)[this->_idy][this->_idx] != -1 ) {
+				this->_frac_part = modf( (*this->results)[this->_idy][this->_idx], &this->_ones_digit );
+				if( this->_opts->invertspectrum ) {
+					*next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
+				} else {
+					*next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
+				}
+            }
+            *next_pixel++;
+		}
+        this->_current_iteration += this->_px;
+        this->_temp = floor( this->_current_iteration / this->_progress_diff );
+        if( this->_temp > this->_progress ) {
+            while( this->_progress < this->_temp ) {
+                this->_progress++;
+                cout << ".";
+            }
+            cout.flush();
+        }
+    }
+    this->_image.syncPixels();
+
+    cout << endl << endl << "Completed " << this->_total_iterations << " pixels" << endl;
+    cout.flush();
 
     return true;
 }

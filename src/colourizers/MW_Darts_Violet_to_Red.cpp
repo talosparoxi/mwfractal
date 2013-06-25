@@ -75,7 +75,7 @@ bool MW_Darts_Violet_to_Red::generatePalette() {
             this->_g = this->_g + this->_m;
             this->_b = this->_b + this->_m;
 
-            this->_palette[this->_idx + this->_idy * ( this->_opts->number_hue + 1 )] = ColorRGB( this->_r, this->_g, this->_b );
+            this->_palette[this->_idx + this->_idy * this->_opts->number_hue] = ColorRGB( this->_r, this->_g, this->_b );
         }
 		this->paletteProgressTick( this->_idy );
     }
