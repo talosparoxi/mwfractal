@@ -75,7 +75,7 @@ bool NEM_Violet_to_Red_Lightness::generatePalette() {
             this->_g = this->_g + this->_m;
             this->_b = this->_b + this->_m;
 
-            this->_palette[this->_idx + this->_idy * this->_opts->number_hue] = ColorRGB( this->_r, this->_g, this->_b );
+            this->_palette[this->_idx + this->_idy * ( this->_opts->number_hue + 1 )] = ColorRGB( this->_r, this->_g, this->_b );
         }
 		this->paletteProgressTick( this->_idy );
     }
@@ -94,9 +94,9 @@ bool NEM_Violet_to_Red_Lightness::run() {
             if( (*this->results)[this->_idy][this->_idx] != -1 ) {
 				this->_frac_part = modf( (*this->results)[this->_idy][this->_idx], &this->_ones_digit );
 				if( this->_opts->invertspectrum ) {
-					*next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
+					*next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + ( this->_opts->number_hue + 1 ) * ( int )floor( ( this->_opts->number_lightness + 1 ) * this->_frac_part )];
 				} else {
-					*next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
+					*next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + ( this->_opts->number_hue + 1 ) * ( int )floor( ( this->_opts->number_lightness + 1 ) * this->_frac_part )];
 				}
             }
             *next_pixel++;
