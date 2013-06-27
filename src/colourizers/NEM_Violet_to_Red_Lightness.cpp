@@ -51,23 +51,23 @@ bool NEM_Violet_to_Red_Lightness::generatePalette() {
 
             this->_x = this->_chroma * ( 1.0 - fabs( fmod( this->_h, 2.0 ) - 1.0 ) );
 
-            if( ( 0.0 <= this->_h ) && ( this->_h < 1.0 ) ) {
+            if( this->_h < 1.0 ) {
                 this->_r = this->_chroma;
                 this->_g = this->_x;
                 this->_b = 0;
-            } else if( ( 1.0 <= this->_h ) && ( this->_h < 2.0 ) ) {
+            } else if( this->_h < 2.0 ) {
                 this->_r = this->_x;
                 this->_g = this->_chroma;
                 this->_b = 0;
-            } else if( ( 2.0 <= this->_h ) && ( this->_h < 3.0 ) ) {
+            } else if( this->_h < 3.0 ) {
                 this->_r = 0;
                 this->_g = this->_chroma;
                 this->_b = this->_x;
-            } else if( ( 3.0 <= this->_h ) && ( this->_h < 4.0 ) ) {
+            } else if( this->_h < 4.0 ) {
                 this->_r = 0;
                 this->_g = this->_x;
                 this->_b = this->_chroma;
-            } else if( ( 4.0 <= this->_h ) && ( this->_h < 5.0 ) ) {
+            } else if( this->_h < 5.0 ) {
                 this->_r = this->_x;
                 this->_g = 0;
                 this->_b = this->_chroma;
