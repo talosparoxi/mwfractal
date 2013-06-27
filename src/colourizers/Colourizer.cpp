@@ -73,7 +73,7 @@ void Colourizer::setResults( std::vector<std::vector<float> >* results ) {
             this->_hi_iteration = (*max_temp);
         }
     }
-    this->_colour_scaler = this->_opts->number_hue / ( this->_hi_iteration - this->_lo_iteration );
+    this->_colour_scaler = ( this->_opts->number_hue - 1 ) / ( this->_hi_iteration - this->_lo_iteration );
 }
 
 void Colourizer::setOrbits( std::vector<std::vector<std::vector<std::complex<float> > > >* orbits ) {
