@@ -35,16 +35,16 @@ bool MW_Darts_Violet_to_Red::generatePalette() {
     this->_s = 1.0;
 
     for( this->_idy = 0; this->_idy < this->_opts->number_lightness; this->_idy++ ) {
-        this->_l = this->_lightness_diff / this->_opts->number_lightness * this->_idy + this->_opts->lightness_min;
+        this->_l = this->_lightness_diff / this->_opts->number_lightness * ( this->_idy + 0.5 ) + this->_opts->lightness_min;
         this->_chroma = ( 1.0 - fabs( 2.0 * this->_l - 1.0 ) ) * this->_s;
 
         for( this->_idx = 0; this->_idx < this->_opts->number_hue; this->_idx++ ) {
             if( this->_opts->colour_weighting == 0.0 ) {
-                this->_h = this->_spectral_diff * this->_idx / this->_opts->number_hue + this->_opts->spectral_min;
+                this->_h = this->_spectral_diff * ( this->_idx + 0.5 ) / this->_opts->number_hue + this->_opts->spectral_min;
             } else if( this->_opts->colour_weighting > 0.0 ) {
-                this->_h = this->_spectral_diff * atan( this->_idx * this->_arctan_horiz_scaler ) / this->_arctan_vert_scaler + this->_opts->spectral_min;
+                this->_h = this->_spectral_diff * atan( ( this->_idx + 0.5 ) * this->_arctan_horiz_scaler ) / this->_arctan_vert_scaler + this->_opts->spectral_min;
             } else {
-                this->_h = this->_spectral_diff * ( 1.0 - atan( ( this->_opts->number_hue - this->_idx ) * this->_arctan_horiz_scaler ) / this->_arctan_vert_scaler ) + this->_opts->spectral_min;
+                this->_h = this->_spectral_diff * ( 1.0 - atan( ( this->_opts->number_hue - ( this->_idx + 0.5 ) ) * this->_arctan_horiz_scaler ) / this->_arctan_vert_scaler ) + this->_opts->spectral_min;
             }
 
             this->_x = this->_chroma * ( 1.0 - fabs( fmod( this->_h, 2.0 ) - 1.0 ) );
