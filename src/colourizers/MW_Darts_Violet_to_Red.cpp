@@ -31,9 +31,11 @@ MW_Darts_Violet_to_Red::~MW_Darts_Violet_to_Red() {
 }
 
 bool MW_Darts_Violet_to_Red::generatePalette() {
-	this->_palette_progress_diff = (float)this->_opts->number_lightness / 80;
-    for( this->_idy = 0; this->_idy <= this->_opts->number_lightness; this->_idy++ ) {
-        for( this->_idx = 0; this->_idx <= this->_opts->number_hue; this->_idx++ ) {
+    this->_palette_progress_diff = (float)this->_opts->number_lightness / 80;
+    this->_s = 1.0;
+    for( this->_idy = 0; this->_idy < this->_opts->number_lightness; this->_idy++ ) {
+        this->_l = this->_lightness_diff / this->_opts->number_lightness * this->_idy + this->_opts->lightness_min;
+        for( this->_idx = 0; this->_idx < this->_opts->number_hue; this->_idx++ ) {
             if( this->_opts->colour_weighting == 0.0 ) {
                 this->_h = this->_spectral_diff * this->_idx / this->_opts->number_hue + this->_opts->spectral_min;
             } else if( this->_opts->colour_weighting > 0.0 ) {
@@ -41,9 +43,6 @@ bool MW_Darts_Violet_to_Red::generatePalette() {
             } else {
                 this->_h = this->_spectral_diff * ( 1.0 - atan( ( this->_opts->number_hue - this->_idx ) * this->_arctan_horiz_scaler ) / this->_arctan_vert_scaler ) + this->_opts->spectral_min;
             }
-
-            this->_s = 1.0;
-            this->_l = this->_lightness_diff / this->_opts->number_lightness * this->_idy + this->_opts->lightness_min;
 
             this->_chroma = ( 1.0 - fabs( 2.0 * this->_l - 1.0 ) ) * this->_s;
             this->_x = this->_chroma * ( 1.0 - fabs( fmod( this->_h, 2.0 ) - 1.0 ) );
@@ -64,10 +63,14 @@ bool MW_Darts_Violet_to_Red::generatePalette() {
                 this->_r = 0;
                 this->_g = this->_x;
                 this->_b = this->_chroma;
-            } else {
+            } else if( ( 4.0 <= this->_h ) && ( this->_h < 5.0 ) ) {
                 this->_r = this->_x;
                 this->_g = 0;
                 this->_b = this->_chroma;
+            } else {
+                this->_r = this->_chroma;
+                this->_g = 0;
+                this->_b = this->_x;
             }
 
             this->_m = this->_l - this->_chroma / 2.0;
@@ -75,9 +78,9 @@ bool MW_Darts_Violet_to_Red::generatePalette() {
             this->_g = this->_g + this->_m;
             this->_b = this->_b + this->_m;
 
-            this->_palette[this->_idx + this->_idy * ( this->_opts->number_hue + 1 )] = ColorRGB( this->_r, this->_g, this->_b );
+            this->_palette[this->_idx + this->_idy * this->_opts->number_hue] = ColorRGB( this->_r, this->_g, this->_b );
         }
-		this->paletteProgressTick( this->_idy );
+	this->paletteProgressTick( this->_idy );
     }
 
     return true;
@@ -92,12 +95,12 @@ bool MW_Darts_Violet_to_Red::run() {
     for( this->_idy = 0; this->_idy < this->_py; this->_idy++ ) {
         for( this->_idx = 0; this->_idx < this->_px; this->_idx++ ) {
             if( (*this->results)[this->_idy][this->_idx] != -1 ) {
-					this->_frac_part = this->game();
-					if( this->_opts->invertspectrum ) {
-						*next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + ( this->_opts->number_hue + 1 ) * ( int )floor( ( this->_opts->number_lightness + 1 ) * this->_frac_part )];
-					} else {
-						*next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + ( this->_opts->number_hue + 1 ) * ( int )floor( ( this->_opts->number_lightness + 1 ) * this->_frac_part )];
-					}
+                this->_frac_part = this->game();
+                if( this->_opts->invertspectrum ) {
+                    *next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
+                } else {
+                    *next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part )];
+                }
             }
             *next_pixel++;
         }

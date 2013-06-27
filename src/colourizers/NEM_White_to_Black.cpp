@@ -30,9 +30,9 @@ NEM_White_to_Black::~NEM_White_to_Black() {
 }
 
 bool NEM_White_to_Black::generatePalette() {
-    for( this->_idx = 0; this->_idx <= this->_opts->number_hue; this->_idx++ ) {
+    for( this->_idx = 0; this->_idx < this->_opts->number_hue; this->_idx++ ) {
         if( this->_opts->colour_weighting == 0.0 ) {
-            this->_l = ( double ) this->_idx / this->_opts->number_hue;
+            this->_l = this->_lightness_diff * this->_idx / this->_opts->number_hue  + this->_opts->lightness_min;
         } else if( this->_opts->colour_weighting > 0.0 ) {
             this->_l = atan( this->_idx * this->_arctan_horiz_scaler ) / this->_arctan_vert_scaler;
         } else {
