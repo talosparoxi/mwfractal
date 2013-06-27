@@ -51,7 +51,7 @@ protected:
 
     Magick::Image _image;
 
-    std::map<int, Magick::ColorRGB> _palette;
+    std::vector<Magick::ColorRGB> _palette;
 
     int _px, _py, _idy, _idx, _total_iterations, _current_iteration, _temp, _progress, _palette_progress;
     float _progress_diff, _palette_progress_diff, _lo_iteration, _hi_iteration;
