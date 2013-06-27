@@ -30,23 +30,18 @@ NEM_White_to_Black::~NEM_White_to_Black() {
 }
 
 bool NEM_White_to_Black::generatePalette() {
-    for( this->_idx = 0; this->_idx < this->_opts->number_hue; this->_idx++ ) {
-        if( this->_opts->colour_weighting == 0.0 ) {
-            this->_l = this->_lightness_diff * this->_idx / this->_opts->number_hue  + this->_opts->lightness_min;
-        } else if( this->_opts->colour_weighting > 0.0 ) {
-            this->_l = atan( this->_idx * this->_arctan_horiz_scaler ) / this->_arctan_vert_scaler;
-        } else {
-            this->_l = 1.0 - atan( ( this->_opts->number_hue - this->_idx ) * this->_arctan_horiz_scaler ) / this->_arctan_vert_scaler;
-        }
+	for( this->_idx = 0; this->_idx < this->_opts->number_hue; this->_idx++ ) {
+		if( this->_opts->colour_weighting == 0.0 ) {
+			this->_l = this->_lightness_diff * this->_idx / this->_opts->number_hue  + this->_opts->lightness_min;
+		} else if( this->_opts->colour_weighting > 0.0 ) {
+			this->_l = atan( this->_idx * this->_arctan_horiz_scaler ) / this->_arctan_vert_scaler;
+		} else {
+			this->_l = 1.0 - atan( ( this->_opts->number_hue - this->_idx ) * this->_arctan_horiz_scaler ) / this->_arctan_vert_scaler;
+		}
 
-        this->_r = this->_l;
-        this->_g = this->_l;
-        this->_b = this->_l;
-
-        this->_palette[this->_idx] = ColorRGB( this->_r, this->_g, this->_b );
+		this->_palette[this->_idx] = ColorRGB( this->_l, this->_l, this->_l );
 		this->paletteProgressTick( this->_idx );
-    }
+	}
 
     return true;
 }
-

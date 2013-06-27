@@ -85,7 +85,7 @@ bool Colourizer::generatePalette() {
 }
 
 bool Colourizer::paletteProgressTick( int current ) {
-        this->_temp = floor( current / this->_palette_progress_diff );
+        this->_temp = ceil( current / this->_palette_progress_diff );
         if( this->_temp > this->_palette_progress ) {
             while( this->_palette_progress < this->_temp ) {
                 this->_palette_progress++;
