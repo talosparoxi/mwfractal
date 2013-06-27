@@ -17,6 +17,7 @@
 #include <boost/program_options.hpp>
 
 #include <iostream>
+#include <string>
 
 namespace bpo = boost::program_options;
 using namespace JS;
@@ -28,7 +29,8 @@ ProgramOptions::ProgramOptions( int argc, char **argv ) {
     bpo::options_description generic( "Generic Options" );
     generic.add_options()
         ( "help,h", "print help and exit" )
-        ( "version,v", "print version information and exit" );
+        ( "version,v", "print version information and exit" )
+		( "fileformat,f", bpo::value<string>(&this->fileformat)->default_value("png"), "output file format (jpg, gif, png, bmp, tiff)");
 
     bpo::options_description model( "Mathematical Model Options" );
     model.add_options()

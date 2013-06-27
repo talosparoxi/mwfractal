@@ -123,7 +123,7 @@ int main(int argc, char** argv) {
         filename << "_i(" << opts->max_iterations << ")";
         filename << "_s(" << ( opts->max_re - opts->min_re ) << "," << ( opts->max_im - opts->min_im ) << ")";
         filename << "_o(" << ( opts->max_re + opts->min_re ) / 2 << "," << ( opts->max_im + opts->min_im ) / 2 << ")";
-        filename << ".png";
+        filename << "." << opts->fileformat;
         cout << filename.str() << "' ... ";
         cout.flush();
 
@@ -139,10 +139,13 @@ int main(int argc, char** argv) {
 				exit( EXIT_FAILURE );
 			}
         }
+    } catch( Magick::WarningCoder &e ) {
+        cout << " (!) " << e.what() << endl;
+        exit( EXIT_FAILURE );
     } catch( exception e ) {
         cout << " (!) " << e.what() << endl;
         exit( EXIT_FAILURE );
-    }
+	}
 
     exit( EXIT_SUCCESS );
 }
