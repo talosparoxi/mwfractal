@@ -46,11 +46,7 @@ Colourizer::Colourizer( boost::shared_ptr<ProgramOptions> opts ) {
     this->_lo_iteration = 0xFFFFFFFF;
     this->_hi_iteration = 0;
     InitializeMagick( "" );
-	if( opts->convergewhite ) {
-		this->_image = Image( Geometry( this->_px, this->_py ), "white" );
-	} else {
-		this->_image = Image( Geometry( this->_px, this->_py ), "black" );
-	}
+	this->_image = Image( Geometry( this->_px, this->_py ), opts->convergecolour );
     this->_image.type( TrueColorType );
 }
 

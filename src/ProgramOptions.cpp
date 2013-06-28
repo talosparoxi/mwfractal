@@ -65,7 +65,7 @@ ProgramOptions::ProgramOptions( int argc, char **argv ) {
 //        ( "graphyplot", bpo::value<int>(&this->gy)->default_value(50), "Size in pixels of the y axis plot lines" )
         ( "autoopen,a", bpo::value<bool>(&this->autoopen)->zero_tokens(), "Automatically open the generated image in the default viewer" )
         ( "invertspectrum,i", bpo::value<bool>(&this->invertspectrum)->zero_tokens(), "Invert the colour spectrum of the colourizer" )
-        ( "convergewhite,w", bpo::value<bool>(&this->convergewhite)->zero_tokens(), "Colour converging pixels white (default is black)" );
+        ( "convergecolour", bpo::value<std::string>(&this->convergecolour)->default_value("#000000"), "Colour converging pixels, hex triplet (default is black)" );
 
     bpo::options_description hidden( "Hidden" );
 

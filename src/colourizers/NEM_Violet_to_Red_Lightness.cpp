@@ -101,7 +101,7 @@ bool NEM_Violet_to_Red_Lightness::run() {
             if( (*this->results)[this->_idy][this->_idx] != -1 ) {
                 this->_frac_part = modf( (*this->results)[this->_idy][this->_idx], &this->_ones_digit );
                 if( this->_opts->invertspectrum ) {
-                    *next_pixel = this->_palette.at( palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part ) );
+                    *next_pixel = this->_palette.at( palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) - this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part ) );
                 } else {
                     *next_pixel = this->_palette.at( ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) + this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part ) );
                 }
