@@ -97,6 +97,55 @@ ProgramOptions::ProgramOptions( int argc, char **argv ) {
         this->_status = 1;
         return;
     }
+
+    if( this->number_hue <= 0 ) {
+        cout << " (!) Number of hues '" << this->number_hue << "' must be a positive integer" << endl;
+        this->_status = 2;
+        return;
+    }
+
+    if( this->number_lightness <= 0 ) {
+        cout << " (!) Number of lightnesses '" << this->number_lightness << "' must be a positive integer" << endl;
+        this->_status = 2;
+        return;
+    }
+
+    if( ( this->spectral_min < 0.0 ) || ( this->spectral_min > 6.0 ) ) {
+        cout << " (!) The spectral minimum '" << this->spectral_min << "' must be bound by [0.0, 6.0]" << endl;
+        this->_status = 2;
+        return;
+    }
+
+    if( ( this->spectral_max < 0.0 ) || ( this->spectral_max > 6.0 ) ) {
+        cout << " (!) The spectral maximum '" << this->spectral_max << "' must be bound by [0.0, 6.0]" << endl;
+        this->_status = 2;
+        return;
+    }
+
+    if( this->spectral_min > this->spectral_max ) {
+        cout << " (!) The spectral minimum '" << this->spectral_min << "' cannot exceed the spectral maximum '" << this->spectral_max << "'" << endl;
+        this->_status = 2;
+        return;
+    }
+
+    if( ( this->lightness_min < 0.0 ) || ( this->lightness_min > 1.0 ) ) {
+        cout << " (!) The lightness minimum '" << this->lightness_min << "' must be bound by [0.0, 1.0]" << endl;
+        this->_status = 2;
+        return;
+    }
+
+    if( ( this->lightness_max < 0.0 ) || ( this->lightness_max > 1.0 ) ) {
+        cout << " (!) The lightness maximum '" << this->lightness_max << "' must be bound by [0.0, 1.0]" << endl;
+        this->_status = 2;
+        return;
+    }
+
+    if( this->lightness_min > this->lightness_max ) {
+        cout << " (!) The lightness minimum '" << this->lightness_min << "' cannot exceed the lightness maximum '" << this->lightness_max << "'" << endl;
+        this->_status = 2;
+        return;
+    }
+
     this->_status = 0;
 
     return;

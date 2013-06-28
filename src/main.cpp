@@ -57,46 +57,6 @@ int main(int argc, char** argv) {
             break;
     }
 
-    if( opts->number_hue <= 0 ) {
-        cout << " (!) Number of hues '" << opts->number_hue << "' must be a positive integer" << endl;
-        exit( EXIT_FAILURE );
-    }
-
-    if( opts->number_lightness <= 0 ) {
-        cout << " (!) Number of lightnesses '" << opts->number_lightness << "' must be a positive integer" << endl;
-        exit( EXIT_FAILURE );
-    }
-
-    if( ( opts->spectral_min < 0.0 ) || ( opts->spectral_min > 6.0 ) ) {
-        cout << " (!) The spectral minimum '" << opts->spectral_min << "' must be contained within 0.0 and 6.0" << endl;
-        exit( EXIT_FAILURE );
-    }
-
-    if( ( opts->spectral_max < 0.0 ) || ( opts->spectral_max > 6.0 ) ) {
-        cout << " (!) The spectral maximum '" << opts->spectral_max << "' must be contained within 0.0 and 6.0" << endl;
-        exit( EXIT_FAILURE );
-    }
-
-    if( opts->spectral_min > opts->spectral_max ) {
-        cout << " (!) The spectral minimum '" << opts->spectral_min << "' cannot exceed the spectral maximum '" << opts->spectral_max << "'" << endl;
-        exit( EXIT_FAILURE );
-    }
-
-    if( ( opts->lightness_min < 0.0 ) || ( opts->lightness_min > 1.0 ) ) {
-        cout << " (!) The lightness minimum '" << opts->lightness_min << "' must be contained within 0.0 and 1.0" << endl;
-        exit( EXIT_FAILURE );
-    }
-
-    if( ( opts->lightness_max < 0.0 ) || ( opts->lightness_max > 1.0 ) ) {
-        cout << " (!) The lightness maximum '" << opts->lightness_max << "' must be contained within 0.0 and 1.0" << endl;
-        exit( EXIT_FAILURE );
-    }
-
-    if( opts->lightness_min > opts->lightness_max ) {
-        cout << " (!) The lightness minimum '" << opts->lightness_min << "' cannot exceed the lightness maximum '" << opts->lightness_max << "'" << endl;
-        exit( EXIT_FAILURE );
-    }
-
     cout << endl << "==== Phase 1 ====: Mathematical Modelling..." << endl;
     cout << endl << "|0%------------------------------------|-50%-------------------------------100%|" << endl;
     if( !generator->run() ) {
