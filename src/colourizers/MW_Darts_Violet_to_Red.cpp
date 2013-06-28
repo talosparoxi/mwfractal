@@ -127,77 +127,118 @@ bool MW_Darts_Violet_to_Red::run() {
 }
 
 float MW_Darts_Violet_to_Red::game() {
-	int score = 0;
-	vector<complex<float> >::iterator orbit_itr;
-	for( orbit_itr = this->orbits->at(this->_idy).at(this->_idx).begin(); orbit_itr != this->orbits->at(this->_idy).at(this->_idx).end(); orbit_itr++ ) {
-		score += this->getScore( (*orbit_itr) );
-	}
+    int score = 0;
+    vector<complex<float> >::iterator orbit_itr;
+    for( orbit_itr = this->orbits->at(this->_idy).at(this->_idx).begin(); orbit_itr != this->orbits->at(this->_idy).at(this->_idx).end(); orbit_itr++ ) {
+        score += this->getScore( (*orbit_itr) );
+    }
 
-	return (float)score / ( this->orbits->at(this->_idy).at(this->_idx).size() * 50 );
+    return (float)score / ( this->orbits->at(this->_idy).at(this->_idx).size() * 50 );
 }
 
 int MW_Darts_Violet_to_Red::getScore( std::complex<float> shot ) {
-	float phase_angle = arg( shot );
+//  The radii of a dart board are as follows:
+//  (Presume the bullseye radius is given by "bullseye")
+//  -bullsring = 2.5 * bullseye
+//  -inner treble ring = 15 * bullseye
+//  -outer treble ring = 16.5 * bullseye
+//  -inner double ring = 25 * bullseye
+//  -outer double ring = 26.5 * bullseye
 
-	float bullseye = 0.5;
+    float bullseye = 0.5;
+    if( abs( shot ) > 26.5 * bullseye ) return 0;
+    if( abs( shot ) < bullseye ) return 50;
+    if( abs( shot ) < 2.5 * bullseye ) return 25;
 
-	int score = 0;
+    int phase_index = ( int )ceil( arg( shot ) * 20 / M_PI );
+    int score = 0;
 
-	if( abs( shot ) > 26.5 * bullseye ) return 0;
-	if( abs( shot ) < bullseye ) return 50;
-	if( abs( shot ) < 2.5 * bullseye ) return 25;
+    switch( phase_index ) {
+        case -19:
+            score = 11;
+            break;
+        case -18:
+        case -17:
+            score = 8;
+            break;
+        case -16:
+        case -15:
+            score = 16;
+            break;
+        case -14:
+        case -13:
+            score = 7;
+            break;
+        case -12:
+        case -11:
+            score = 19;
+            break;
+        case -10:
+        case -9:
+            score = 3;
+            break;
+        case -8:
+        case -7:
+            score = 17;
+            break;
+        case -6:
+        case -5:
+            score = 2;
+            break;
+        case -4:
+        case -3:
+            score = 15;
+            break;
+        case -2:
+        case -1:
+            score = 10;
+            break;
+        case 0:
+        case 1:
+            score = 6;
+            break;
+        case 2:
+        case 3:
+            score = 13;
+            break;
+        case 4:
+        case 5:
+            score = 4;
+            break;
+        case 6:
+        case 7:
+            score = 18;
+            break;
+        case 8:
+        case 9:
+            score = 1;
+            break;
+        case 10:
+        case 11:
+            score = 20;
+            break;
+        case 12:
+        case 13:
+            score = 5;
+            break;
+        case 14:
+        case 15:
+            score = 12;
+            break;
+        case 16:
+        case 17:
+            score = 9;
+            break;
+        case 18:
+        case 19:
+            score = 14;
+            break;
+        default:
+            score = 11;
+    }
 
+    if( abs( shot ) > 25 * bullseye ) return score * 2;
+    if( ( abs( shot ) > 15 * bullseye ) && ( abs( shot ) < 16.5 * bullseye ) ) return score * 3;
 
-	if( phase_angle <= -0.95 * M_PI ) {
-		score = 11;
-	} else if( phase_angle <= -0.85 * M_PI ) {
-		score =  8;
-	} else if( phase_angle <= -0.75 * M_PI ) {
-		score =  16;
-	} else if( phase_angle <= -0.65 * M_PI ) {
-		score =  7;
-	} else if( phase_angle <= -0.55 * M_PI ) {
-		score =  19;
-	} else if( phase_angle <= -0.45 * M_PI ) {
-		score =  3;
-	} else if( phase_angle <= -0.35 * M_PI ) {
-		score =  17;
-	} else if( phase_angle <= -0.25 * M_PI ) {
-		score =  2;
-	} else if( phase_angle <= -0.15 * M_PI ) {
-		score =  15;
-	} else if( phase_angle <= -0.05 * M_PI ) {
-		score =  10;
-	} else if( phase_angle <= 0.05 * M_PI ) {
-		score =  6;
-	} else if( phase_angle <= 0.15 * M_PI ) {
-		score =  13;
-	} else if( phase_angle <= 0.25 * M_PI ) {
-		score =  4;
-	} else if( phase_angle <= 0.35 * M_PI ) {
-		score =  18;
-	} else if( phase_angle <= 0.45 * M_PI ) {
-		score =  1;
-	} else if( phase_angle <= 0.55 * M_PI ) {
-		score =  20;
-	} else if( phase_angle <= 0.65 * M_PI ) {
-		score =  5;
-	} else if( phase_angle <= 0.75 * M_PI ) {
-		score =  12;
-	} else if( phase_angle <= 0.85 * M_PI ) {
-		score =  9;
-	} else if( phase_angle <= 0.95 * M_PI ) {
-		score =  14;
-	} else {
-		score =  11;
-	}
-
-	//dblring 25
-	//outside treble 16.5
-	//inside treble 15
-	if( abs( shot ) > 25 * bullseye ) return score * 2;
-	if( ( abs( shot ) > 15 * bullseye ) && ( abs( shot ) < 16.5 * bullseye ) ) return score * 3;
-
-
-	return score;
+    return score;
 }
