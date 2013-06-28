@@ -26,11 +26,15 @@ public:
     MW_Darts_Violet_to_Red( const MW_Darts_Violet_to_Red& orig );
     virtual ~MW_Darts_Violet_to_Red();
     bool generatePalette();
+    void generateScores();
 	bool run();
-	float game();
+	int game();
 	int getScore( std::complex<float> shot );
 
 private:
+    int _lo_score, _hi_score;
+    float _ln_lo_score, _ln_hi_score, _ln_score_diff, _ln_pixel_score;
+    std::vector<int> _gamescores;
 
 };
 

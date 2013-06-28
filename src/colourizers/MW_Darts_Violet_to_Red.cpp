@@ -91,7 +91,9 @@ bool MW_Darts_Violet_to_Red::generatePalette() {
 }
 
 bool MW_Darts_Violet_to_Red::run() {
-	int palette_size = this->_palette.size() - 1;
+    this->generateScores();
+
+    int palette_size = this->_palette.size() - 1;
 
     PixelPacket *pixel_cache = this->_image.getPixels( 0, 0, this->_px, this->_py );
     PixelPacket *next_pixel = pixel_cache;
@@ -99,7 +101,8 @@ bool MW_Darts_Violet_to_Red::run() {
     for( this->_idy = 0; this->_idy < this->_py; this->_idy++ ) {
         for( this->_idx = 0; this->_idx < this->_px; this->_idx++ ) {
             if( (*this->results)[this->_idy][this->_idx] != -1 ) {
-                this->_frac_part = this->game();
+                this->_ln_pixel_score = log( this->_gamescores.at( this->_idy * this->_px + this->_idx ) );
+                this->_frac_part = ( this->_ln_pixel_score - this->_ln_lo_score ) / this->_ln_score_diff;
                 if( this->_opts->invertspectrum ) {
                     *next_pixel = this->_palette.at( palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) - this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part ) );
                 } else {
@@ -126,14 +129,34 @@ bool MW_Darts_Violet_to_Red::run() {
     return true;
 }
 
-float MW_Darts_Violet_to_Red::game() {
+void MW_Darts_Violet_to_Red::generateScores() {
+    this->_gamescores.reserve( this->_px * this->_py );
+
+    for( this->_idy = 0; this->_idy < this->_py; this->_idy++ ) {
+        for( this->_idx = 0; this->_idx < this->_px; this->_idx++ ) {
+            this->_gamescores.push_back( this->game() );
+        }
+    }
+
+    std::vector<int>::iterator min_score, max_score;
+    min_score = min_element( this->_gamescores.begin(), this->_gamescores.end() );
+    max_score = max_element( this->_gamescores.begin(), this->_gamescores.end() );
+    this->_lo_score = *min_score;
+    this->_hi_score = *max_score;
+    this->_ln_lo_score = log( this->_lo_score );
+    this->_ln_hi_score = log( this->_hi_score );
+
+    this->_ln_score_diff = this->_ln_hi_score - this->_ln_lo_score;
+}
+
+int MW_Darts_Violet_to_Red::game() {
     int score = 0;
     vector<complex<float> >::iterator orbit_itr;
     for( orbit_itr = this->orbits->at(this->_idy).at(this->_idx).begin(); orbit_itr != this->orbits->at(this->_idy).at(this->_idx).end(); orbit_itr++ ) {
         score += this->getScore( (*orbit_itr) );
     }
 
-    return (float)score / ( this->orbits->at(this->_idy).at(this->_idx).size() * 50 );
+    return score;
 }
 
 int MW_Darts_Violet_to_Red::getScore( std::complex<float> shot ) {
