@@ -101,7 +101,7 @@ bool MW_Darts_Violet_to_Red::run() {
     for( this->_idy = 0; this->_idy < this->_py; this->_idy++ ) {
         for( this->_idx = 0; this->_idx < this->_px; this->_idx++ ) {
             if( (*this->results)[this->_idy][this->_idx] != -1 ) {
-                this->_ln_pixel_score = log( this->_gamescores.at( this->_idy * this->_px + this->_idx ) );
+                this->_ln_pixel_score = log( this->_gamescores.at( this->_idy * this->_px + this->_idx ) + 1 );
                 this->_frac_part = ( this->_ln_pixel_score - this->_ln_lo_score ) / this->_ln_score_diff;
                 if( this->_opts->invertspectrum ) {
                     *next_pixel = this->_palette.at( palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler ) - this->_opts->number_hue * ( int )floor( this->_opts->number_lightness * this->_frac_part ) );
@@ -143,8 +143,8 @@ void MW_Darts_Violet_to_Red::generateScores() {
     max_score = max_element( this->_gamescores.begin(), this->_gamescores.end() );
     this->_lo_score = *min_score;
     this->_hi_score = *max_score;
-    this->_ln_lo_score = log( this->_lo_score );
-    this->_ln_hi_score = log( this->_hi_score );
+    this->_ln_lo_score = log( this->_lo_score + 1 );
+    this->_ln_hi_score = log( this->_hi_score + 1 );
 
     this->_ln_score_diff = this->_ln_hi_score - this->_ln_lo_score;
 }
