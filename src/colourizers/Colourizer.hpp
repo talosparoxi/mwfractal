@@ -16,8 +16,8 @@
 #define	COLOURIZER_HPP
 
 #include <boost/shared_ptr.hpp>
-#include <ImageMagick/Magick++.h>
-
+#include <imageWrapper.h>
+//#include <Magick++/lib/Magick++.h>
 #include <algorithm>
 #include <cmath>
 #include <complex>
@@ -43,15 +43,16 @@ public:
 
     std::vector<std::vector<float> >* results;
     std::vector<std::vector<std::vector<std::complex<float> > > >* orbits;
+    
 
 private:
 
 protected:
     boost::shared_ptr<ProgramOptions> _opts;
 
-    Magick::Image _image;
+    //Magick::Image _image;
 
-    std::vector<Magick::ColorRGB> _palette;
+    //std::vector<Magick::ColorRGB> _palette;
 
     int _px, _py, _idy, _idx, _total_iterations, _current_iteration, _temp, _progress, _palette_progress;
     float _progress_diff, _palette_progress_diff, _lo_iteration, _hi_iteration;

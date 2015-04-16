@@ -16,7 +16,7 @@
 #include "Colourizer.hpp"
 
 using namespace JS;
-using namespace Magick;
+//using namespace Magick;
 using namespace std;
 
 NEM_Violet_to_Red_Lightness::NEM_Violet_to_Red_Lightness(  boost::shared_ptr<ProgramOptions> opts )
@@ -34,7 +34,7 @@ bool NEM_Violet_to_Red_Lightness::generatePalette() {
     this->_s = 1.0;
     this->_palette_progress_diff = (float)this->_opts->number_lightness / 80;
 
-	this->_palette.reserve( this->_opts->number_lightness * this->_opts->number_hue );
+//	this->_palette.reserve( this->_opts->number_lightness * this->_opts->number_hue );
 
     for( this->_idy = 0; this->_idy < this->_opts->number_lightness; this->_idy++ ) {
         this->_l = this->_lightness_diff / this->_opts->number_lightness * ( this->_idy + 0.5 ) + this->_opts->lightness_min;
@@ -82,16 +82,16 @@ bool NEM_Violet_to_Red_Lightness::generatePalette() {
             this->_g = this->_g + this->_m;
             this->_b = this->_b + this->_m;
 
-            this->_palette.push_back( ColorRGB( this->_r, this->_g, this->_b ) );
+//            this->_palette.push_back( ColorRGB( this->_r, this->_g, this->_b ) );
         }
-        this->paletteProgressTick( this->_idy );
+//        this->paletteProgressTick( this->_idy );
     }
 
     return true;
 }
 
 bool NEM_Violet_to_Red_Lightness::run() {
-	int palette_size = this->_palette.size() - 1;
+/*	int palette_size = this->_palette.size() - 1;
 
     PixelPacket *pixel_cache = this->_image.getPixels( 0, 0, this->_px, this->_py );
     PixelPacket *next_pixel = pixel_cache;
@@ -122,6 +122,6 @@ bool NEM_Violet_to_Red_Lightness::run() {
 
     cout << endl << endl << "Completed " << this->_total_iterations << " pixels" << endl;
     cout.flush();
-
+*/
     return true;
 }

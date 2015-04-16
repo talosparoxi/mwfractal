@@ -16,8 +16,9 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <SDL.h>
 
-#include "../config.h"
+//#include "../config.h"
 #include "ProgramOptions.hpp"
 #include "generators/Julia.hpp"
 #include "generators/Mandelbrot.hpp"
@@ -30,123 +31,129 @@ using namespace std;
 using namespace JS;
 
 int main(int argc, char** argv) {
-    boost::shared_ptr<ProgramOptions> opts;
-    opts.reset( new ProgramOptions( argc, argv ) );
-    if( opts->getStatus() != 0 ) {
-        if( opts->getStatus() > 1 ) {
-            exit( EXIT_FAILURE );
-        } else {
-            exit( EXIT_SUCCESS );
-        }
-    }
-
-    boost::shared_ptr<Generator> generator;
-
-    switch( opts->generator ) {
-        case 1:
-            generator.reset( new Julia( opts ) );
-            break;
-
-        case 2:
-            generator.reset( new Mandelbrot( opts ) );
-            break;
-
-        default:
-            cout << " (!) Invalid Generator '" << opts->generator << "'" << endl;
-            exit( EXIT_FAILURE );
-            break;
-    }
-
-    cout << endl << "==== Phase 1 ====: Mathematical Modelling..." << endl;
-    cout << endl << "|0%------------------------------------|-50%-------------------------------100%|" << endl;
-    if( !generator->run() ) {
-        cout << "x" << endl << endl << " (!) Generator run failed." << endl;
-        exit( EXIT_FAILURE );
-    }
-
-    cout << endl;
-
-    boost::shared_ptr<Colourizer> colourizer;
-
-    switch( opts->colourizer ) {
-        case 1:
-            colourizer.reset( new NEM_Violet_to_Red( opts ) );
-            break;
-
-        case 2:
-            colourizer.reset( new NEM_Violet_to_Red_Lightness( opts ) );
-            break;
-
-        case 3:
-            colourizer.reset( new NEM_White_to_Black( opts ) );
-            break;
-
-        case 4:
-            colourizer.reset( new MW_Darts_Violet_to_Red( opts ) );
-            break;
-
-        default:
-            cout << " (!) Invalid Colourizer '" << opts->colourizer << "'" << endl;
-            exit( EXIT_FAILURE );
-            break;
-    }
-
-    colourizer->setResults( &generator->results );
-    colourizer->setOrbits( &generator->orbits );
-
-    cout << endl << "==== Phase 2 ====: Palette Selection..." << endl;
-    cout << endl << "|0%------------------------------------|-50%-------------------------------100%|" << endl;
-    if( !colourizer->generatePalette() ) {
-        cout << "x" << endl << endl << " (!) Palette generation failed." << endl;
-        exit( EXIT_FAILURE );
-    }
-
-
-    cout << endl;
-
-    cout << endl << "==== Phase 3 ====: Colouring..." << endl;
-    cout << endl << "|0%------------------------------------|-50%-------------------------------100%|" << endl;
-    if( !colourizer->run() ) {
-        cout << "x" << endl << endl << " (!) Colouring run failed." << endl;
-        exit( EXIT_FAILURE );
-    }
-
-    cout << endl;
-
-    cout << endl << "Writing File '";
-	try {
-        ostringstream filename;
-        filename << "fractal-cl(" << opts->colourizer << ")";
-        filename << "_g(" << opts->generator << ")";
-        filename << "_c(" << opts->cr << "," << opts->ci << ")";
-        filename << "_dp(" << opts->dprx << "," << opts->dpix << ")";
-        filename << "_i(" << opts->max_iterations << ")";
-        filename << "_s(" << ( opts->max_re - opts->min_re ) << "," << ( opts->max_im - opts->min_im ) << ")";
-        filename << "_o(" << ( opts->max_re + opts->min_re ) / 2 << "," << ( opts->max_im + opts->min_im ) / 2 << ")";
-        filename << "." << opts->fileformat;
-        cout << filename.str() << "' ... ";
-        cout.flush();
-
-        colourizer->writeImage( filename.str().c_str() );
-        cout << "Done!" << endl << endl;
-
-        if( opts->autoopen ) {
-            ostringstream cmd;
-            cmd << "xdg-open \"" << filename.str() << "\" 2>/dev/null &";
-
-            bool returned = system( cmd.str().c_str() );
-			if( returned ) {
-				exit( EXIT_FAILURE );
-			}
-        }
-    } catch( Magick::WarningCoder &e ) {
-        cout << " (!) " << e.what() << endl;
-        exit( EXIT_FAILURE );
-    } catch( exception e ) {
-        cout << " (!) " << e.what() << endl;
-        exit( EXIT_FAILURE );
-	}
-
-    exit( EXIT_SUCCESS );
+	//Start up SDL and create window
+//	if( !init() ) {
+//		printf( "Failed to initialize!\n" );
+//	} else {
+	    boost::shared_ptr<ProgramOptions> opts;
+	    opts.reset( new ProgramOptions( argc, argv ) );
+	    if( opts->getStatus() != 0 ) {
+	        if( opts->getStatus() > 1 ) {
+	            exit( EXIT_FAILURE );
+	        } else {
+	            exit( EXIT_SUCCESS );
+	        }
+	    }
+	
+	    boost::shared_ptr<Generator> generator;
+	
+	    switch( opts->generator ) {
+	        case 1:
+	            generator.reset( new Julia( opts ) );
+	            break;
+	
+	        case 2:
+	            generator.reset( new Mandelbrot( opts ) );
+	            break;
+	
+	        default:
+	            cout << " (!) Invalid Generator '" << opts->generator << "'" << endl;
+	            exit( EXIT_FAILURE );
+	            break;
+	    }
+	
+	    cout << endl << "==== Phase 1 ====: Mathematical Modelling..." << endl;
+	    cout << endl << "|0%------------------------------------|-50%-------------------------------100%|" << endl;
+	    if( !generator->run() ) {
+	        cout << "x" << endl << endl << " (!) Generator run failed." << endl;
+	        exit( EXIT_FAILURE );
+	    }
+	
+	    cout << endl;
+	
+	    boost::shared_ptr<Colourizer> colourizer;
+	
+	    switch( opts->colourizer ) {
+	        case 1:
+	            colourizer.reset( new NEM_Violet_to_Red( opts ) );
+	            break;
+	
+	        case 2:
+	            colourizer.reset( new NEM_Violet_to_Red_Lightness( opts ) );
+	            break;
+	
+	        case 3:
+	            colourizer.reset( new NEM_White_to_Black( opts ) );
+	            break;
+	
+	        case 4:
+	            colourizer.reset( new MW_Darts_Violet_to_Red( opts ) );
+	            break;
+	
+	        default:
+	            cout << " (!) Invalid Colourizer '" << opts->colourizer << "'" << endl;
+	            exit( EXIT_FAILURE );
+	            break;
+	    }
+	
+	    colourizer->setResults( &generator->results );
+	    colourizer->setOrbits( &generator->orbits );
+	
+	    cout << endl << "==== Phase 2 ====: Palette Selection..." << endl;
+	    cout << endl << "|0%------------------------------------|-50%-------------------------------100%|" << endl;
+	    if( !colourizer->generatePalette() ) {
+	        cout << "x" << endl << endl << " (!) Palette generation failed." << endl;
+	        exit( EXIT_FAILURE );
+	    }
+	
+	
+	    cout << endl;
+	
+	    cout << endl << "==== Phase 3 ====: Colouring..." << endl;
+	    cout << endl << "|0%------------------------------------|-50%-------------------------------100%|" << endl;
+	    if( !colourizer->run() ) {
+	        cout << "x" << endl << endl << " (!) Colouring run failed." << endl;
+	        exit( EXIT_FAILURE );
+	    }
+	
+	    cout << endl;
+	
+	    cout << endl << "Writing File '";
+		try {
+	        ostringstream filename;
+	        filename << "fractal-cl(" << opts->colourizer << ")";
+	        filename << "_g(" << opts->generator << ")";
+	        filename << "_c(" << opts->cr << "," << opts->ci << ")";
+	        filename << "_dp(" << opts->dprx << "," << opts->dpix << ")";
+	        filename << "_i(" << opts->max_iterations << ")";
+	        filename << "_s(" << ( opts->max_re - opts->min_re ) << "," << ( opts->max_im - opts->min_im ) << ")";
+	        filename << "_o(" << ( opts->max_re + opts->min_re ) / 2 << "," << ( opts->max_im + opts->min_im ) / 2 << ")";
+	        filename << "." << opts->fileformat;
+	        cout << filename.str() << "' ... ";
+	        cout.flush();
+	
+	        colourizer->writeImage( filename.str().c_str() );
+	        cout << "Done!" << endl << endl;
+	
+	        if( opts->autoopen ) {
+	            ostringstream cmd;
+	            cmd << "xdg-open \"" << filename.str() << "\" 2>/dev/null &";
+	
+	            bool returned = system( cmd.str().c_str() );
+				if( returned ) {
+					exit( EXIT_FAILURE );
+				}
+	        }
+	/*    } catch( Magick::WarningCoder &e ) {
+	        cout << " (!) " << e.what() << endl;
+	        exit( EXIT_FAILURE );
+	*/
+	    } catch( exception e ) {
+	        cout << " (!) " << e.what() << endl;
+	        exit( EXIT_FAILURE );
+		}
+	
+	    exit( EXIT_SUCCESS );
+//	}
 }
 

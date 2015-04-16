@@ -15,7 +15,7 @@
 #include "NEM_White_to_Black.hpp"
 
 using namespace JS;
-using namespace Magick;
+//using namespace Magick;
 using namespace std;
 
 NEM_White_to_Black::NEM_White_to_Black( boost::shared_ptr<ProgramOptions> opts )
@@ -30,7 +30,7 @@ NEM_White_to_Black::~NEM_White_to_Black() {
 }
 
 bool NEM_White_to_Black::generatePalette() {
-	this->_palette.reserve( this->_opts->number_lightness );
+//	this->_palette.reserve( this->_opts->number_lightness );
 
 	for( this->_idx = 0; this->_idx < this->_opts->number_hue; this->_idx++ ) {
 		if( this->_opts->colour_weighting == 0.0 ) {
@@ -41,8 +41,8 @@ bool NEM_White_to_Black::generatePalette() {
 			this->_l = 1.0 - atan( ( this->_opts->number_hue - ( this->_idx + 0.5 ) ) * this->_arctan_horiz_scaler ) / this->_arctan_vert_scaler;
 		}
 
-		this->_palette.push_back( ColorRGB( this->_l, this->_l, this->_l ) );
-		this->paletteProgressTick( this->_idx );
+//		this->_palette.push_back( ColorRGB( this->_l, this->_l, this->_l ) );
+//		this->paletteProgressTick( this->_idx );
 	}
 
     return true;

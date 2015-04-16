@@ -1,0 +1,28 @@
+# Project: demo
+# Makefile created by Dev-C++ 5.9.2
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = demo.o
+LINKOBJ  = demo.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -L"C:/ProgramData/SDL2-2.0.3/x86_64-w64-mingw32/lib" -L"C:/ProgramData/SDL2_image-2.0.0/x86_64-w64-mingw32/lib" -L"C:/ProgramData/SDL2_ttf-2.0.12/x86_64-w64-mingw32/lib" -L"C:/ProgramData/SDL2_mixer-2.0.0/x86_64-w64-mingw32/lib" -L"C:/ProgramData/boost_1_57_0" -L"C:/ProgramData/freeglut/lib" -L"C:/ProgramData/glew-1.12.0/lib/Release/x64" -L"C:/tenthLevelGames/Multi-useClasses" -L"C:/ProgramData/gmp-6.0.0" -L"C:/ProgramData/boost_1_57_0/libs" -L"C:/ProgramData/boost_1_57_0/stage/lib" -static-libgcc -L"C:/tenthLevelGames/mwfractal/lib/ImageMagick-6.9.1/Magick++/lib" -L"C:/tenthLevelGames/mwfractal/lib/ImageMagick-6.9.1" -lmingw32
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.8.1/include" -I"C:/tenthLevelGames/mwfractal/lib/ImageMagick-6.9.1/Magick++/lib" -I"C:/tenthLevelGames/mwfractal/lib/ImageMagick-6.9.1"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.8.1/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.8.1/include/c++" -I"C:/ProgramData/SDL2_image-2.0.0/x86_64-w64-mingw32/include/SDL2" -I"C:/ProgramData/SDL2-2.0.3/x86_64-w64-mingw32/include/SDL2" -I"C:/ProgramData/SDL2_ttf-2.0.12/x86_64-w64-mingw32/include/SDL2" -I"C:/ProgramData/SDL2_mixer-2.0.0/x86_64-w64-mingw32/include/SDL2" -I"C:/ProgramData/boost_1_57_0" -I"C:/ProgramData/freeglut/include/GL" -I"C:/ProgramData/glew-1.12.0/include" -I"C:/tenthLevelGames/Multi-useClasses" -I"C:/ProgramData/gmp-6.0.0" -I"C:/ProgramData/boost_1_57_0/stage/lib" -I"C:/tenthLevelGames/mwfractal/lib/ImageMagick-6.9.1/Magick++/lib" -I"C:/tenthLevelGames/mwfractal/lib/ImageMagick-6.9.1"
+BIN      = demo.exe
+CXXFLAGS = $(CXXINCS) 
+CFLAGS   = $(INCS) 
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+demo.o: demo.cpp
+	$(CPP) -c demo.cpp -o demo.o $(CXXFLAGS)

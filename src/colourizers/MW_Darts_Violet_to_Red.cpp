@@ -13,9 +13,10 @@
     limitations under the License. */
 
 #include "MW_Darts_Violet_to_Red.hpp"
+#include <time.h>
 
 using namespace JS;
-using namespace Magick;
+//using namespace Magick;
 using namespace std;
 
 MW_Darts_Violet_to_Red::MW_Darts_Violet_to_Red(  boost::shared_ptr<ProgramOptions> opts )
@@ -34,7 +35,7 @@ bool MW_Darts_Violet_to_Red::generatePalette() {
     this->_palette_progress_diff = (float)this->_opts->number_lightness / 80;
     this->_s = 1.0;
 
-	this->_palette.reserve( this->_opts->number_lightness * this->_opts->number_hue );
+//	this->_palette.reserve( this->_opts->number_lightness * this->_opts->number_hue );
 
     for( this->_idy = 0; this->_idy < this->_opts->number_lightness; this->_idy++ ) {
         this->_l = this->_lightness_diff / this->_opts->number_lightness * ( this->_idy + 0.5 ) + this->_opts->lightness_min;
@@ -82,16 +83,16 @@ bool MW_Darts_Violet_to_Red::generatePalette() {
             this->_g = this->_g + this->_m;
             this->_b = this->_b + this->_m;
 
-            this->_palette.push_back( ColorRGB( this->_r, this->_g, this->_b ) );
+//            this->_palette.push_back( ColorRGB( this->_r, this->_g, this->_b ) );
         }
-		this->paletteProgressTick( this->_idy );
+//		this->paletteProgressTick( this->_idy );
     }
 
     return true;
 }
 
 bool MW_Darts_Violet_to_Red::run() {
-    this->generateScores();
+/*    this->generateScores();
 
     int palette_size = this->_palette.size() - 1;
 
@@ -127,6 +128,7 @@ bool MW_Darts_Violet_to_Red::run() {
     cout.flush();
 	
     return true;
+*/
 }
 
 void MW_Darts_Violet_to_Red::generateScores() {

@@ -17,7 +17,7 @@
 #include "../utils.hpp"
 
 using namespace JS;
-using namespace Magick;
+//using namespace Magick;
 using namespace std;
 
 Colourizer::Colourizer( boost::shared_ptr<ProgramOptions> opts ) {
@@ -45,9 +45,15 @@ Colourizer::Colourizer( boost::shared_ptr<ProgramOptions> opts ) {
     this->_palette_progress = 0;
     this->_lo_iteration = 0xFFFFFFFF;
     this->_hi_iteration = 0;
-    InitializeMagick( "" );
-	this->_image = Image( Geometry( this->_px, this->_py ), opts->convergecolour );
-    this->_image.type( TrueColorType );
+    if( !init() ) {
+	}
+	LTexture gTexture;
+	if (gTexture.capture()){
+	};
+//    this->_image.type( TrueColorType );
+
+
+
 }
 
 Colourizer::Colourizer( const Colourizer& orig ) {
@@ -94,18 +100,22 @@ bool Colourizer::paletteProgressTick( int current ) {
 }
 
 bool Colourizer::run() {
-	int palette_size = this->_palette.size() - 1;
+//	int palette_size = this->_palette.size() - 1;
 
-    PixelPacket *pixel_cache = this->_image.getPixels( 0, 0, this->_px, this->_py );
-    PixelPacket *next_pixel = pixel_cache;
+//    PixelPacket *pixel_cache = this->_image.getPixels( 0, 0, this->_px, this->_py );
+//    PixelPacket *next_pixel = pixel_cache;
+
+	gTexture.setColour(128, 128, 128);
+
+/*
 
     for( this->_idy = 0; this->_idy < this->_py; this->_idy++ ) {
         for( this->_idx = 0; this->_idx < this->_px; this->_idx++ ) {
             if( (*this->results)[this->_idy][this->_idx] != -1 ) {
                 if( this->_opts->invertspectrum ) {
-                    *next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler )];
+//                    *next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler )];
                 } else {
-                    *next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler )];
+//                    *next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler )];
                 }
             }
             *next_pixel++;
@@ -120,15 +130,17 @@ bool Colourizer::run() {
             cout.flush();
         }
     }
-    this->_image.syncPixels();
+
+//    this->_image.syncPixels();
 
     cout << endl << endl << "Completed " << this->_total_iterations << " pixels" << endl;
     cout.flush();
+*/
 	
     return true;
 }
 
 void Colourizer::writeImage( const char* filename ) {
-    this->_image.write( filename );
+//    this->_image.write( filename );
 }
 
