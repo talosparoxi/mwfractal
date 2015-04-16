@@ -19,6 +19,8 @@
 #include <SDL.h>
 
 //#include "../config.h"
+#include <imageWrapper.h>
+
 #include "ProgramOptions.hpp"
 #include "generators/Julia.hpp"
 #include "generators/Mandelbrot.hpp"
@@ -32,9 +34,9 @@ using namespace JS;
 
 int main(int argc, char** argv) {
 	//Start up SDL and create window
-//	if( !init() ) {
-//		printf( "Failed to initialize!\n" );
-//	} else {
+	if( !init() ) {
+		printf( "Failed to initialize!\n" );
+	} else {
 	    boost::shared_ptr<ProgramOptions> opts;
 	    opts.reset( new ProgramOptions( argc, argv ) );
 	    if( opts->getStatus() != 0 ) {
@@ -154,6 +156,6 @@ int main(int argc, char** argv) {
 		}
 	
 	    exit( EXIT_SUCCESS );
-//	}
+	}
 }
 

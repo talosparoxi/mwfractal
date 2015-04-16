@@ -13,12 +13,15 @@
     limitations under the License. */
 
 #include "Colourizer.hpp"
+#include <imageWrapper.h>
 
 #include "../utils.hpp"
 
 using namespace JS;
 //using namespace Magick;
 using namespace std;
+
+
 
 Colourizer::Colourizer( boost::shared_ptr<ProgramOptions> opts ) {
     this->_opts = opts;
@@ -47,9 +50,7 @@ Colourizer::Colourizer( boost::shared_ptr<ProgramOptions> opts ) {
     this->_hi_iteration = 0;
     if( !init() ) {
 	}
-	LTexture gTexture;
-	if (gTexture.capture()){
-	};
+	gTexture->capture();
 //    this->_image.type( TrueColorType );
 
 
@@ -105,7 +106,7 @@ bool Colourizer::run() {
 //    PixelPacket *pixel_cache = this->_image.getPixels( 0, 0, this->_px, this->_py );
 //    PixelPacket *next_pixel = pixel_cache;
 
-	gTexture.setColour(128, 128, 128);
+	gTexture->setColour(128, 128, 128);
 
 /*
 
