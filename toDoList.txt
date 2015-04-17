@@ -1,0 +1,7 @@
+to do list
+--------------
+find source of generated numbers ***complete (generator.cpp postloop() show results)***
+find how to turn numbers generated into colours
+set texture to screen
+set pixels of texture to colours progressively
+output screen as file

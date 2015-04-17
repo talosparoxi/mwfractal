@@ -51,6 +51,7 @@ Colourizer::Colourizer( boost::shared_ptr<ProgramOptions> opts ) {
     if( !init() ) {
 	}
 	gTexture->capture();
+//	this->_image = Image( Geometry( this->_px, this->_py ), opts->convergecolour );
 //    this->_image.type( TrueColorType );
 
 
@@ -105,7 +106,7 @@ bool Colourizer::run() {
 
 //    PixelPacket *pixel_cache = this->_image.getPixels( 0, 0, this->_px, this->_py );
 //    PixelPacket *next_pixel = pixel_cache;
-
+	
 	gTexture->setColour(128, 128, 128);
 
 /*

@@ -75,3 +75,4 @@ void close( ) {
 	IMG_Quit();
 	SDL_Quit();
 }
+
