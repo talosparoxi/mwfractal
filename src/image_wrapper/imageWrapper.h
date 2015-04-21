@@ -32,7 +32,8 @@ class LTexture {
 		int _Height;
 };
 
-
+extern int windowWidth;
+extern int windowHeight;
 
 
 

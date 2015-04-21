@@ -26,7 +26,7 @@ bool LTexture::capture() {
 	SDL_Texture* newTexture = NULL;
 		
 	//Create texture from surface pixels
-	newTexture = SDL_CreateTexture( gRenderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_TARGET, 200, 200 );
+	newTexture = SDL_CreateTexture( gRenderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_TARGET, windowWidth, windowHeight );
 		
 	//Return success
 	_Texture = newTexture;

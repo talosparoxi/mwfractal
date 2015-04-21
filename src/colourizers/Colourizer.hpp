@@ -16,6 +16,9 @@
 #define	COLOURIZER_HPP
 
 #include <boost/shared_ptr.hpp>
+#include <boost/lexical_cast.hpp>
+#include <imageWrapper.h>
+#include <sdl.h>
 //#include <Magick++/lib/Magick++.h>
 #include <algorithm>
 #include <cmath>

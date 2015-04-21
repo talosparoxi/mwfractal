@@ -212,7 +212,7 @@ void Generator::_postLoop() {
         cout << endl << "Results for each point:" << endl << endl;
         for( row_itr = this->results.begin(); row_itr != this->results.end(); row_itr++ ) {
             for( col_itr = (*row_itr).begin(); col_itr != (*row_itr).end(); col_itr++ ) {
-                    cout << "[" << row_itr - this->results.begin() << "," << col_itr - (*row_itr).begin() << "]: " << (*col_itr) << endl;
+//                    cout << "[" << row_itr - this->results.begin() << "," << col_itr - (*row_itr).begin() << "]: " << (*col_itr) << endl;
             }
         }
         cout << endl;

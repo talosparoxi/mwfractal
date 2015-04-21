@@ -13,7 +13,6 @@
     limitations under the License. */
 
 #include "Colourizer.hpp"
-#include <imageWrapper.h>
 
 #include "../utils.hpp"
 
@@ -21,7 +20,14 @@ using namespace JS;
 //using namespace Magick;
 using namespace std;
 
-
+int streamManip(std::string colour, int pos, int length){
+	std::stringstream ss;
+	
+	ss << std::hex << colour.substr(pos, length);
+	ss >> colour;
+	
+	return boost::lexical_cast<int>( colour );
+}
 
 Colourizer::Colourizer( boost::shared_ptr<ProgramOptions> opts ) {
     this->_opts = opts;
@@ -102,25 +108,47 @@ bool Colourizer::paletteProgressTick( int current ) {
 }
 
 bool Colourizer::run() {
-//	int palette_size = this->_palette.size() - 1;
-
-//    PixelPacket *pixel_cache = this->_image.getPixels( 0, 0, this->_px, this->_py );
-//    PixelPacket *next_pixel = pixel_cache;
-	
-	gTexture->setColour(128, 128, 128);
-
-/*
-
     for( this->_idy = 0; this->_idy < this->_py; this->_idy++ ) {
         for( this->_idx = 0; this->_idx < this->_px; this->_idx++ ) {
             if( (*this->results)[this->_idy][this->_idx] != -1 ) {
-                if( this->_opts->invertspectrum ) {
-//                    *next_pixel = this->_palette[palette_size - ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler )];
-                } else {
-//                    *next_pixel = this->_palette[( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler )];
-                }
+			//colour declaration
+				int _colourDec = ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler );
+				std::string _colourHex;
+			
+				std::stringstream ss;
+				ss << std::dec << _colourDec;
+				ss >> _colourHex;
+				switch(_colourHex.length()) {
+					case 1:
+						_r = streamManip( _colourHex, 0, 1 );
+						break;
+					case 2:
+						_r = streamManip( _colourHex, 0, 2 );
+						break;
+					case 3:
+						_r = streamManip( _colourHex, 0, 2 );
+						_g = streamManip( _colourHex, 2, 1 );
+						break;
+					case 4:
+						_r = streamManip( _colourHex, 0, 2 );
+						_g = streamManip( _colourHex, 2, 2 );
+						break;
+					case 5:
+						_r = streamManip( _colourHex, 0, 2 );
+						_g = streamManip( _colourHex, 2, 2 );
+						_b = streamManip( _colourHex, 4, 1 );
+					break;
+					case 6:
+						_r = streamManip( _colourHex, 0, 2 );
+						_g = streamManip( _colourHex, 2, 2 );
+						_b = streamManip( _colourHex, 4, 2 );
+					break;
+				}
+				SDL_Rect fillRect = { this->_idx, this->_idy, 1, 1 };	
+				//set pixel color	
+				SDL_SetRenderDrawColor( gRenderer, _r, _g, _b, 0 );	
+				SDL_RenderFillRect( gRenderer, &fillRect );
             }
-            *next_pixel++;
         }
         this->_current_iteration += this->_px;
         this->_temp = floor( this->_current_iteration / this->_progress_diff );
@@ -132,17 +160,18 @@ bool Colourizer::run() {
             cout.flush();
         }
     }
-
-//    this->_image.syncPixels();
-
+//Update the surface
+	SDL_RenderPresent( gRenderer );
+	SDL_Delay( 8000 );
     cout << endl << endl << "Completed " << this->_total_iterations << " pixels" << endl;
     cout.flush();
-*/
+
 	
     return true;
 }
 
 void Colourizer::writeImage( const char* filename ) {
-//    this->_image.write( filename );
+//	screenSurface = SDL_GetWindowSurface( gWindow );;
+//	SDL_SaveBMP( screenSurface, filename );
 }
 

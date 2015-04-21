@@ -34,9 +34,7 @@ using namespace JS;
 
 int main(int argc, char** argv) {
 	//Start up SDL and create window
-	if( !init() ) {
-		printf( "Failed to initialize!\n" );
-	} else {
+	
 	    boost::shared_ptr<ProgramOptions> opts;
 	    opts.reset( new ProgramOptions( argc, argv ) );
 	    if( opts->getStatus() != 0 ) {
@@ -72,7 +70,9 @@ int main(int argc, char** argv) {
 	    }
 	
 	    cout << endl;
-	
+	if( !init() ) {
+		printf( "Failed to initialize!\n" );
+	} else {
 	    boost::shared_ptr<Colourizer> colourizer;
 	
 	    switch( opts->colourizer ) {
@@ -130,12 +130,13 @@ int main(int argc, char** argv) {
 	        filename << "_i(" << opts->max_iterations << ")";
 	        filename << "_s(" << ( opts->max_re - opts->min_re ) << "," << ( opts->max_im - opts->min_im ) << ")";
 	        filename << "_o(" << ( opts->max_re + opts->min_re ) / 2 << "," << ( opts->max_im + opts->min_im ) / 2 << ")";
-	        filename << "." << opts->fileformat;
+	        filename << ".bmp";// bitmap is only format currently supported << opts->fileformat;
 	        cout << filename.str() << "' ... ";
 	        cout.flush();
 	
 	        colourizer->writeImage( filename.str().c_str() );
 	        cout << "Done!" << endl << endl;
+	        close();
 	
 	        if( opts->autoopen ) {
 	            ostringstream cmd;
