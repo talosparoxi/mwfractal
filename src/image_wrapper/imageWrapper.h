@@ -1,4 +1,5 @@
 #include <SDL.h>
+#include "..\ProgramOptions.hpp"
 
 #ifndef Texture
 #define Texture

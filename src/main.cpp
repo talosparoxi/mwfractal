@@ -70,6 +70,8 @@ int main(int argc, char** argv) {
 	    }
 	
 	    cout << endl;
+	    
+	    
 	if( !init() ) {
 		printf( "Failed to initialize!\n" );
 	} else {

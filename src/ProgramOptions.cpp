@@ -50,8 +50,8 @@ ProgramOptions::ProgramOptions( int argc, char **argv ) {
 
     bpo::options_description graphics( "Graphical Options" );
     graphics.add_options()
-        ( "width", bpo::value<int>(&this->width)->default_value(320), "Output image width" )
-        ( "height", bpo::value<int>(&this->height)->default_value(180), "Output image height" )
+        ( "width", bpo::value<int>(&this->width)->default_value(100), "Output image width" )
+        ( "height", bpo::value<int>(&this->height)->default_value(100), "Output image height" )
         ( "colourizer", bpo::value<int>(&this->colourizer)->default_value(1), "Colourizer (1 = violet(inner) to red(outer), 2 = violet(inner) to red(outer) w/ lightness, 3 = white(inner) to black(outer), 4 = Darts!)" )
         ( "number_hue", bpo::value<int>(&this->number_hue)->default_value(65536), "Number of (diverging) hue values" )
         ( "number_lightness", bpo::value<int>(&this->number_lightness)->default_value(100), "Number of (diverging) lightness values" )
@@ -93,7 +93,7 @@ ProgramOptions::ProgramOptions( int argc, char **argv ) {
     }
 
     if( vm.count( "version" ) ) {
-        cout << endl << "\tMoore & Willcock" << endl << "\tVersion: 1.0 + 0.1i" << endl;
+        cout << endl << "\tOriginal creators: Moore & Willcock"<< endl<< "\tRevision by: Hardy" << endl << "\tVersion: 1.0 + 0.1i" << endl;
         this->_status = 1;
         return;
     }

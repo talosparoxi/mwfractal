@@ -25,7 +25,6 @@ int streamManip(std::string colour, int pos, int length){
 	
 	ss << std::hex << colour.substr(pos, length);
 	ss >> colour;
-	
 	return boost::lexical_cast<int>( colour );
 }
 
@@ -56,7 +55,7 @@ Colourizer::Colourizer( boost::shared_ptr<ProgramOptions> opts ) {
     this->_hi_iteration = 0;
     if( !init() ) {
 	}
-	gTexture->capture();
+	
 //	this->_image = Image( Geometry( this->_px, this->_py ), opts->convergecolour );
 //    this->_image.type( TrueColorType );
 
@@ -118,6 +117,7 @@ bool Colourizer::run() {
 				std::stringstream ss;
 				ss << std::dec << _colourDec;
 				ss >> _colourHex;
+				
 				switch(_colourHex.length()) {
 					case 1:
 						_r = streamManip( _colourHex, 0, 1 );
@@ -138,7 +138,7 @@ bool Colourizer::run() {
 						_g = streamManip( _colourHex, 2, 2 );
 						_b = streamManip( _colourHex, 4, 1 );
 					break;
-					case 6:
+					default:
 						_r = streamManip( _colourHex, 0, 2 );
 						_g = streamManip( _colourHex, 2, 2 );
 						_b = streamManip( _colourHex, 4, 2 );
@@ -146,7 +146,11 @@ bool Colourizer::run() {
 				}
 				SDL_Rect fillRect = { this->_idx, this->_idy, 1, 1 };	
 				//set pixel color	
-				SDL_SetRenderDrawColor( gRenderer, _r, _g, _b, 0 );	
+				if( this->_opts->invertspectrum ) {
+					SDL_SetRenderDrawColor( gRenderer, 255-_r, 255-_g, 255-_b, 0 );	
+				} else {
+					SDL_SetRenderDrawColor( gRenderer, _r, _g, _b, this->_current_iteration );	
+				}
 				SDL_RenderFillRect( gRenderer, &fillRect );
             }
         }
@@ -156,12 +160,14 @@ bool Colourizer::run() {
             while( this->_progress < this->_temp ) {
                 this->_progress++;
                 cout << ".";
+                SDL_RenderPresent( gRenderer );
             }
             cout.flush();
         }
     }
 //Update the surface
 	SDL_RenderPresent( gRenderer );
+	gTexture->capture();
 	SDL_Delay( 8000 );
     cout << endl << endl << "Completed " << this->_total_iterations << " pixels" << endl;
     cout.flush();
@@ -171,7 +177,14 @@ bool Colourizer::run() {
 }
 
 void Colourizer::writeImage( const char* filename ) {
-//	screenSurface = SDL_GetWindowSurface( gWindow );;
-//	SDL_SaveBMP( screenSurface, filename );
+//	unsigned char * pixels = new (std::nothrow) unsigned char[gWindow->w * gWindow->h * gWindow->format->BytesPerPixel];
+//	SDL_RenderReadPixels(gRenderer, &gWindow->clip_rect, gWindow->format->format, pixels, gWindow->w * gWindow->format->BytesPerPixel);
+//  SDL_Surface* saveSurface = SDL_CreateRGBSurfaceFrom(pixels, gWindow->w, gWindow->h, gWindow->format->BitsPerPixel, gWindow->w * gWindow->format->BytesPerPixel, gWindow->format->Rmask, gWindow->format->Gmask, gWindow->format->Bmask, gWindow->format->Amask);
+                       
+//	SDL_Surface* screenSurface = SDL_GetWindowSurface( gWindow );;
+
+
+//	SDL_UpdateWindowSurface(gWindow)
+//	SDL_SaveBMP( saveSurface, filename );
 }
 

@@ -1,17 +1,17 @@
 # Project: mwfractal
 # Makefile created by Dev-C++ 5.9.2
 
-CPP      = g++.exe
-CC       = gcc.exe
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
 OBJ      = src/main.o src/ProgramOptions.o src/utils.o src/colourizers/Colourizer.o src/colourizers/MW_Darts_Violet_to_Red.o src/colourizers/NEM_Violet_to_Red.o src/colourizers/NEM_Violet_to_Red_Lightness.o src/colourizers/NEM_White_to_Black.o src/generators/Generator.o src/generators/Julia.o src/generators/Mandelbrot.o src/image_wrapper/imageWrapper.o src/image_wrapper/LTexture.o
 LINKOBJ  = src/main.o src/ProgramOptions.o src/utils.o src/colourizers/Colourizer.o src/colourizers/MW_Darts_Violet_to_Red.o src/colourizers/NEM_Violet_to_Red.o src/colourizers/NEM_Violet_to_Red_Lightness.o src/colourizers/NEM_White_to_Black.o src/generators/Generator.o src/generators/Julia.o src/generators/Mandelbrot.o src/image_wrapper/imageWrapper.o src/image_wrapper/LTexture.o
-LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -L"C:/ProgramData/SDL2-2.0.3/x86_64-w64-mingw32/lib" -L"C:/ProgramData/SDL2_image-2.0.0/x86_64-w64-mingw32/lib" -L"C:/ProgramData/SDL2_ttf-2.0.12/x86_64-w64-mingw32/lib" -L"C:/ProgramData/SDL2_mixer-2.0.0/x86_64-w64-mingw32/lib" -L"C:/ProgramData/boost_1_57_0" -L"C:/ProgramData/freeglut/lib" -L"C:/ProgramData/glew-1.12.0/lib/Release/x64" -L"C:/tenthLevelGames/Multi-useClasses" -L"C:/ProgramData/gmp-6.0.0" -L"C:/ProgramData/boost_1_57_0/libs" -L"C:/ProgramData/boost_1_57_0/stage/lib" -L"C:/ProgramData/jpeg-6b" -static-libgcc -lmingw32 -lboost_program_options-mgw48-mt-1_57 -lboost_program_options-mgw48-mt-d-1_57 -lSDL2main -lSDL2 -lSDL2_image
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -L"C:/ProgramData/SDL2-2.0.3/x86_64-w64-mingw32/lib" -L"C:/ProgramData/SDL2_image-2.0.0/x86_64-w64-mingw32/lib" -L"C:/ProgramData/SDL2_ttf-2.0.12/x86_64-w64-mingw32/lib" -L"C:/ProgramData/SDL2_mixer-2.0.0/x86_64-w64-mingw32/lib" -L"C:/ProgramData/boost_1_57_0" -L"C:/ProgramData/freeglut/lib" -L"C:/ProgramData/glew-1.12.0/lib/Release/x64" -L"C:/tenthLevelGames/Multi-useClasses" -L"C:/ProgramData/gmp-6.0.0" -L"C:/ProgramData/boost_1_57_0/libs" -L"C:/ProgramData/boost_1_57_0/stage/lib" -L"C:/ProgramData/jpeg-6b" -static-libgcc -lmingw32 -lboost_program_options-mgw48-mt-1_57 -lboost_program_options-mgw48-mt-d-1_57 -lSDL2main -lSDL2 -lSDL2_image -g3
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.8.1/include" -I"C:/tenthLevelGames/mwfractal/src/image_wrapper"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.8.1/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.8.1/include/c++" -I"C:/ProgramData/SDL2_image-2.0.0/x86_64-w64-mingw32/include/SDL2" -I"C:/ProgramData/SDL2-2.0.3/x86_64-w64-mingw32/include/SDL2" -I"C:/ProgramData/SDL2_ttf-2.0.12/x86_64-w64-mingw32/include/SDL2" -I"C:/ProgramData/SDL2_mixer-2.0.0/x86_64-w64-mingw32/include/SDL2" -I"C:/ProgramData/boost_1_57_0" -I"C:/ProgramData/freeglut/include/GL" -I"C:/ProgramData/glew-1.12.0/include" -I"C:/tenthLevelGames/Multi-useClasses" -I"C:/ProgramData/gmp-6.0.0" -I"C:/ProgramData/boost_1_57_0/stage/lib" -I"C:/ProgramData/jpeg-6b" -I"C:/tenthLevelGames/mwfractal/src/image_wrapper"
 BIN      = mwfractal.exe
-CXXFLAGS = $(CXXINCS) -Werror
-CFLAGS   = $(INCS) -Werror
+CXXFLAGS = $(CXXINCS) -Werror -g3
+CFLAGS   = $(INCS) -Werror -g3
 RM       = rm.exe -f
 
 .PHONY: all all-before all-after clean clean-custom
