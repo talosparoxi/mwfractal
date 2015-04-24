@@ -82,6 +82,7 @@ void Colourizer::setResults( std::vector<std::vector<float> >* results ) {
             this->_hi_iteration = (*max_temp);
         }
     }
+    // scale to set numbers between the max and min colour values
     this->_colour_scaler = ( this->_opts->number_hue - 1 ) / ( this->_hi_iteration - this->_lo_iteration );
 }
 
@@ -107,11 +108,22 @@ bool Colourizer::paletteProgressTick( int current ) {
 }
 
 bool Colourizer::run() {
+	gTexture->createForPixelData(this->_opts->width, this->_opts->height);
     for( this->_idy = 0; this->_idy < this->_py; this->_idy++ ) {
         for( this->_idx = 0; this->_idx < this->_px; this->_idx++ ) {
             if( (*this->results)[this->_idy][this->_idx] != -1 ) {
 			//colour declaration
-				int _colourDec = ( int )floor( ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler );
+				int _colour = ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler;
+				int hexScaler = 0xFFFFFF / (this->_opts->number_hue - 1);
+				
+				int hexValue;
+				
+				hexValue = ( int )floor( _colour * hexScaler );
+				_r = (hexValue & 0xFF0000) >> 16;
+				_g = ( hexValue & 0x0FF00) >> 8;
+				_b = hexValue & 0x0000FF;
+//				cout << (_colour / this->_colour_scaler ) << _colour << (hexValue & 0xFFFFFF) << "   " << _r << "    " << _g << "    " << _b << endl;
+				/*
 				std::string _colourHex;
 			
 				std::stringstream ss;
@@ -144,15 +156,38 @@ bool Colourizer::run() {
 						_b = streamManip( _colourHex, 4, 2 );
 					break;
 				}
-				SDL_Rect fillRect = { this->_idx, this->_idy, 1, 1 };	
-				//set pixel color	
-				if( this->_opts->invertspectrum ) {
-					SDL_SetRenderDrawColor( gRenderer, 255-_r, 255-_g, 255-_b, 0 );	
-				} else {
-					SDL_SetRenderDrawColor( gRenderer, _r, _g, _b, this->_current_iteration );	
+				*/
+//				SDL_Rect fillRect = { this->_idx, this->_idy, 1, 1 };	
+//				//set pixel color	
+//				if( this->_opts->invertspectrum ) {
+//					SDL_SetRenderDrawColor( gRenderer, 255-_r, 255-_g, 255-_b, 0 );	
+//				} else {
+//					SDL_SetRenderDrawColor( gRenderer, _r, _g, _b, 0 );	
+//				}
+//				
+				//Lock texture
+				if( !gTexture->lockTexture() ) {
+					printf( "Unable to lock texture!\n" );
+				} else{
+					//Get pixel data
+					Uint32* pixels = (Uint32*)gTexture->getPixels();
+					int pixelCount = ( gTexture->getPitch() / 4 ) * gTexture->getHeight();
+			
+					pixels[ this->_idx + ( this->_px * this->_idy ) ] = SDL_MapRGBA( SDL_GetWindowSurface( gWindow )->format, _r, _g, _b, 0 );
+						
+					}
+		
+					//Unlock texture
+					gTexture->unlockTexture();
 				}
-				SDL_RenderFillRect( gRenderer, &fillRect );
-            }
+				
+				
+				
+//				if(this colour is less than previous iterations){
+//					SDL_RenderFillRect( gRenderer, &fillRect );
+//				}
+//				SDL_RenderFillRect( gRenderer, &fillRect );
+//            }
         }
         this->_current_iteration += this->_px;
         this->_temp = floor( this->_current_iteration / this->_progress_diff );
@@ -160,14 +195,15 @@ bool Colourizer::run() {
             while( this->_progress < this->_temp ) {
                 this->_progress++;
                 cout << ".";
+                gTexture->render();
                 SDL_RenderPresent( gRenderer );
             }
             cout.flush();
         }
     }
 //Update the surface
+	gTexture->render();
 	SDL_RenderPresent( gRenderer );
-	gTexture->capture();
 	SDL_Delay( 8000 );
     cout << endl << endl << "Completed " << this->_total_iterations << " pixels" << endl;
     cout.flush();

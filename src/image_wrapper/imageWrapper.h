@@ -4,33 +4,56 @@
 #ifndef Texture
 #define Texture
 
-class LTexture {
+class LTexture
+{
 	public:
-		//initializer
+		//Initializes variables
 		LTexture();
-		
+
 		//Deallocates memory
 		~LTexture();
+
+		//Loads image at specified path
+		bool loadFromFile( std::string path );
 		
-		//Allocate texture
-		bool capture();
+		bool createForWindow( );
+		
+		bool createForPixelData( int w, int h );
 		
 		//Deallocates texture
 		void free();
-		
+
 		//Set color modulation
-        void setColour( Uint8 red, Uint8 green, Uint8 blue );
-        
-		//Renders texture at given point
-		void render( int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE );
-				
-	private:
-		//texture representor for hardware
-		SDL_Texture* _Texture;
+		void setColor( Uint8 red, Uint8 green, Uint8 blue );
+
+		//Set blending
+		void setBlendMode( SDL_BlendMode blending );
+
+		//Set alpha modulation
+		void setAlpha( Uint8 alpha );
 		
+		//Renders texture at given point
+		void render( int x = 0, int y = 0, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE );
+
+		//Gets image dimensions
+		int getWidth();
+		int getHeight();
+
+		//Pixel manipulators
+		bool lockTexture();
+		bool unlockTexture();
+		void* getPixels();
+		int getPitch();
+
+	private:
+		//The actual hardware texture
+		SDL_Texture* _texture;
+		void* _pixels;
+		int _pitch;
+
 		//Image dimensions
-		int _Width;
-		int _Height;
+		int _width;
+		int _height;
 };
 
 extern int windowWidth;

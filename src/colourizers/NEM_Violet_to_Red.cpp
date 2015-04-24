@@ -34,7 +34,8 @@ bool NEM_Violet_to_Red::generatePalette() {
     this->_l = 0.5;
     this->_chroma = ( 1.0 - fabs( 2.0 * this->_l - 1.0 ) ) * this->_s;
 
-	this->_palette.reserve( this->_opts->number_hue );
+//	this->_palette.reserve( this->_opts->number_hue );
+//	cout << this->_palette.size();
 
     for( this->_idx = 0; this->_idx < this->_opts->number_hue; this->_idx++ ) {
         if( this->_opts->colour_weighting == 0.0 ) {
@@ -78,12 +79,13 @@ bool NEM_Violet_to_Red::generatePalette() {
         this->_g = this->_g + this->_m;
         this->_b = this->_b + this->_m;
 
- //        this->_palette.push_back( ColorRGB( this->_r, this->_g, this->_b ) );       
-//		SDL_Colour pHolder = { this->_r, this->_g, this->_b };
+ //        this->_palette.push_back( ColorRGB( this->_r, this->_g, this->_b ) );    
+    
+		SDL_Colour pHolder = { this->_r, this->_g, this->_b };
 //		_palette.push_back( pHolder );
-
+		
 		this->paletteProgressTick( this->_idx );
     }
-
+	
     return true;
 }

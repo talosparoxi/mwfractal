@@ -53,6 +53,7 @@ protected:
     boost::shared_ptr<ProgramOptions> _opts;
 
     //Magick::Image _image;
+//	std::vector<magick::colorRGB> _palette;
 
     std::vector<SDL_Colour> _palette;
 

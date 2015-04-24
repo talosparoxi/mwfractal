@@ -110,7 +110,6 @@ int main(int argc, char** argv) {
 	        exit( EXIT_FAILURE );
 	    }
 	
-	
 	    cout << endl;
 	
 	    cout << endl << "==== Phase 3 ====: Colouring..." << endl;
