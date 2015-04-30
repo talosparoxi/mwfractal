@@ -12,8 +12,8 @@ void close( );
 
 //window being used
 SDL_Window* gWindow = NULL;
-int windowWidth = 900;
-int windowHeight = 900;
+int windowWidth = 1100;
+int windowHeight = 1100;
 
 //window renderer
 SDL_Renderer* gRenderer = NULL;

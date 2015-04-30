@@ -39,7 +39,7 @@ bool LTexture::loadFromFile( std::string path )
 	else
 	{
 		//Convert surface to display format
-		SDL_Surface* formattedSurface = SDL_ConvertSurface( loadedSurface, SDL_GetWindowSurface( gWindow )->format, NULL );
+		SDL_Surface* formattedSurface = SDL_ConvertSurface( loadedSurface, SDL_GetWindowSurface( gWindow )->format, 0 );
 		if( formattedSurface == NULL )
 		{
 			printf( "Unable to convert loaded surface to display format! SDL Error: %s\n", SDL_GetError() );
@@ -84,7 +84,7 @@ bool LTexture::loadFromFile( std::string path )
 
 bool LTexture::createForWindow() {
 	SDL_Texture* newTexture = NULL;
-	SDL_Surface* formattedSurface = SDL_ConvertSurface( SDL_GetWindowSurface( gWindow ), SDL_GetWindowSurface( gWindow )->format, NULL );
+	SDL_Surface* formattedSurface = SDL_ConvertSurface( SDL_GetWindowSurface( gWindow ), SDL_GetWindowSurface( gWindow )->format, 0 );
 	newTexture = SDL_CreateTexture( gRenderer, SDL_GetWindowPixelFormat( gWindow ), SDL_TEXTUREACCESS_STREAMING, formattedSurface->w, formattedSurface->h );
 	if( newTexture == NULL ) {
 		printf( "Unable to create blank texture! SDL Error: %s\n", SDL_GetError() );

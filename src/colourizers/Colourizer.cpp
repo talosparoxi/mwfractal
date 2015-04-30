@@ -109,18 +109,22 @@ bool Colourizer::paletteProgressTick( int current ) {
 
 bool Colourizer::run() {
 	gTexture->createForPixelData(this->_opts->width, this->_opts->height);
+	
     for( this->_idy = 0; this->_idy < this->_py; this->_idy++ ) {
+    	if( !gTexture->lockTexture() ) {
+					printf( "Unable to lock texture!\n" );
+					} else{
         for( this->_idx = 0; this->_idx < this->_px; this->_idx++ ) {
             if( (*this->results)[this->_idy][this->_idx] != -1 ) {
 			//colour declaration
 				int _colour = ( (*this->results)[this->_idy][this->_idx] - this->_lo_iteration ) * this->_colour_scaler;
-				int hexScaler = 0xFFFFFF / (this->_opts->number_hue - 1);
+				int hexScaler = 0xFFFFFF / (this->_opts->number_hue);
 				
 				int hexValue;
 				
 				hexValue = ( int )floor( _colour * hexScaler );
 				_r = (hexValue & 0xFF0000) >> 16;
-				_g = ( hexValue & 0x0FF00) >> 8;
+				_g = ( hexValue & 0x00FF00) >> 8;
 				_b = hexValue & 0x0000FF;
 //				cout << (_colour / this->_colour_scaler ) << _colour << (hexValue & 0xFFFFFF) << "   " << _r << "    " << _g << "    " << _b << endl;
 				/*
@@ -158,37 +162,41 @@ bool Colourizer::run() {
 				}
 				*/
 //				SDL_Rect fillRect = { this->_idx, this->_idy, 1, 1 };	
-//				//set pixel color	
+////				//set pixel color	
 //				if( this->_opts->invertspectrum ) {
 //					SDL_SetRenderDrawColor( gRenderer, 255-_r, 255-_g, 255-_b, 0 );	
 //				} else {
 //					SDL_SetRenderDrawColor( gRenderer, _r, _g, _b, 0 );	
 //				}
+//
+////				if(this colour is less than previous iterations){
+////					SDL_RenderFillRect( gRenderer, &fillRect );
+////				}
+//				SDL_RenderFillRect( gRenderer, &fillRect );
+//            }
 //				
 				//Lock texture
-				if( !gTexture->lockTexture() ) {
-					printf( "Unable to lock texture!\n" );
-				} else{
+				
+				
 					//Get pixel data
 					Uint32* pixels = (Uint32*)gTexture->getPixels();
-					int pixelCount = ( gTexture->getPitch() / 4 ) * gTexture->getHeight();
-			
-					pixels[ this->_idx + ( this->_px * this->_idy ) ] = SDL_MapRGBA( SDL_GetWindowSurface( gWindow )->format, _r, _g, _b, 0 );
+					int pixelCount = this->_idx + ( this->_px * this->_idy );
+//					if( SDL_MapRGBA( SDL_GetWindowSurface( gWindow )->format, _r, _g, _b, 0 ) > pixels[ pixelCount ] ) {
+					pixels[ pixelCount ] = SDL_MapRGBA( SDL_GetWindowSurface( gWindow )->format, (_palette[ _colour ]).r , ( _palette[ _colour ]).g, (_palette[ _colour ]).b , (_palette[ _colour ]).a );
+//				}
+//					pixels[ pixelCount ] = SDL_MapRGBA( SDL_GetWindowSurface( gWindow )->format, _r, _g, _b, 0 );
 						
+//		cout<<(_palette[_colour].r)<< " /  " <<(_palette[_colour]).g << "  /  " << _palette[_colour].b <<endl;
 					}
 		
-					//Unlock texture
-					gTexture->unlockTexture();
+					
 				}
 				
 				
 				
-//				if(this colour is less than previous iterations){
-//					SDL_RenderFillRect( gRenderer, &fillRect );
-//				}
-//				SDL_RenderFillRect( gRenderer, &fillRect );
-//            }
         }
+        //Unlock texture
+		gTexture->unlockTexture();
         this->_current_iteration += this->_px;
         this->_temp = floor( this->_current_iteration / this->_progress_diff );
         if( this->_temp > this->_progress ) {
